@@ -26,8 +26,8 @@ Alias /phppgadmin "C:/wamp64/apps/phpPgAdmin-7.13.0/"
 </Directory>
 ```
 6. Open `C:\wamp64\apps\phpPgAdmin-7.13.0\conf\config.inc.php`.
-7. find `$conf['servers'][0]['host'] = '';`, then change to `$conf['servers'][0]['host'] = 'localhost';`
-8. find `$conf['extra_login_security'] = true;`, then change `true` to `false`
+7. Find `$conf['servers'][0]['host'] = '';`, then change to `$conf['servers'][0]['host'] = 'localhost';`
+8. Find `$conf['extra_login_security'] = true;`, then change `true` to `false`
 9. Start Wampserver.
 10. Left click on the Wampserver tray icon. Navigate to PHP > PHP extension. Then enable `pgsql` and `pdo_pgsql` extensions. (You may get an error. I just ignored it)
 11. Go to http://localhost/phppgadmin/ and try to login.
@@ -40,3 +40,10 @@ Default Login credentials are
 but it might be different if you chose a different password during PostgreSQL installation.
 
 Edited from https://stackoverflow.com/questions/14621181/integration-of-postgresql-on-wamp
+
+## Running the auction site
+
+1. Go to `C:\wamp64\www`
+2. Clone this github repository into a new folder. If you have git bash you can use `cd C:\wamp64\www` and `git clone https://github.com/wenzhaojia2000/auction.git auction`
+3. Run Wampserver if you haven't already
+4. Go to http://localhost/auction/index.php
