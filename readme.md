@@ -12,7 +12,7 @@ To edit the ER diagram, go to `File` > `Open from` > `Device` > Find .drawio fil
 2. Install [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) **version 14.5** (this is *not the latest release*!)
 3. Download [phpPgAdmin](https://github.com/phppgadmin/phppgadmin/releases/tag/REL_7-13-0)
 4. Extract `phpPgAdmin-7.13.0.zip` in `C:\wamp64\apps`, so the path will be `C:\wamp\apps\phpPgAdmin-7.13.0`. (If you installed Wamp somewhere else, correct the file paths.)
-5. Create a file called `phppgadmin.conf` in C:\wamp64\alias. And copy-paste the following (Similarly to above, if you installed Wamp somewhere else, correct the file paths):
+5. Create a file called `phppgadmin.conf` in `C:\wamp64\alias`. And copy-paste the following (Similarly to above, if you installed Wamp somewhere else, correct the file paths):
 
 ```
 Alias /phppgadmin "C:/wamp64/apps/phpPgAdmin-7.13.0/" 
