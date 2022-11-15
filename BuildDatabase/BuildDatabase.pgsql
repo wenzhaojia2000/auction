@@ -14,6 +14,19 @@ Create table "SELLS" (
     "Item ID" INT REFERENCES "ITEMS"("Item ID")
 );
 
+create table "WATCHES" (
+    "User ID" INT REFERENCES "USER"("User ID"),
+    "Item ID" INT REFERENCES "ITEMS"("Item ID")
+);
+
+create table "BID" (
+    "Bid ID" INT not NULL PRIMARY KEY,
+    "User ID" INT REFERENCES "USER"("User ID"),
+    "Item ID" INT REFERENCES "ITEMS"("Item ID"),
+    "Bid Price" numeric (20),
+    "Bid Date" DATE
+);
+
 create table "ITEMS" ( 
     "Item ID" INT not NULL PRIMARY KEY,
     "User ID" INT not NULL REFERENCES "USER"("User ID"),
@@ -30,6 +43,10 @@ create table "ITEMS" (
     "Delivery Price" Numeric(20) not NULL
 );
 
+create table "CATEGORY" (
+    "Category Name" Char(50) not NULL PRIMARY KEY
+);
+
 create table "CUSTOMER_ADDRESS" (
     "User ID" INT REFERENCES "USER"("User ID"),
     "Address ID" INT REFERENCES "ADDRESS"("Address ID"),
@@ -43,26 +60,7 @@ create table "ADDRESS" (
     "Postcode" char(20) not null,
 ); 
 
-Create table "CATEGORY" (
-    "Category Name" Char(50) not NULL PRIMARY KEY
-);
-
-Create table "WATCHES" (
-    "User ID" INT REFERENCES "USER"("User ID"),
-    "Item ID" INT REFERENCES "ITEMS"("Item ID")
-);
-
-Create table "BID" (
-    "Bid ID" INT NOT NULL PRIMARY KEY,
-    "User ID" INT REFERENCES "USER"("User ID"),
-    "Item ID" INT REFERENCES "ITEMS"("Item ID"),
-    "Bid Price" numeric (20),
-    "Bid Date" DATE
-);
-
-
-
-create table "CUSTOMER" (
+create table "BUYER" (
     "User ID" INT REFERENCES "USER"("User ID")
 );
 
