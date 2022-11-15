@@ -20,13 +20,13 @@ create table "ITEMS" (
     "Item Name" char(50) not NULL,
     "Item Image" bytea not NULL,
     "Item Description" char(500) not NULL,
-    "Item condition" char(20) not NULL,
-    "reservation Price" Numeric(20) not NULL,
+    "Item Condition" char(20) not NULL,
+    "Reservation Price" Numeric(20) not NULL,
     "Starting Price" numeric(20) not NULL,
     "Current Price" numeric(20) not NULL,
     "Category Name" char(20) not NULL REFERENCES "CATEGORY"("Category Name"),
-    "listing Date" DATE not NULL,
-    "End date" DATE not NULL,
+    "Listing Date" DATE not NULL,
+    "End Date" DATE not NULL,
     "Delivery Price" Numeric(20) not NULL
 );
 
@@ -37,8 +37,8 @@ create table "CUSTOMER_ADDRESS" (
 
 create table "ADDRESS" (
     "Address ID" INT not null, 
-    "AddressLine1" char(50) not null, 
-    "AddressLine2" char(20) not null, 
+    "Address Line 1" char(50) not null, 
+    "Address Line 2" char(20) not null, 
     "City" char(20) not null, 
     "Postcode" char(20) not null,
 ); 
