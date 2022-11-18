@@ -1,3 +1,5 @@
+<!-- This is the page for one item listed. -->
+
 <?php include_once("header.php")?>
 <?php require("utilities.php")?>
 
