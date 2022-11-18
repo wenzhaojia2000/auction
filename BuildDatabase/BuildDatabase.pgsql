@@ -11,14 +11,14 @@ create table "User" (
     "lastName" char(50) not null
 );
 
-Create table "SELLS" (
-    "userID" INT REFERENCES "USER"("User ID"),
-    "Item ID" INT REFERENCES "ITEMS"("Item ID")
+Create table "Sells" (
+    "userID" INT REFERENCES "User"(userID),
+    "itemID" INT REFERENCES "Items"(itemID)
 );
 
-create table "WATCHES" (
-    "User ID" INT REFERENCES "USER"("User ID"),
-    "Item ID" INT REFERENCES "ITEMS"("Item ID")
+create table "Watches" (
+    "userID" INT REFERENCES "User"(User ID),
+    "itemID" INT REFERENCES "Items"(Item ID)
 );
 
 create table "BID" (
