@@ -1,9 +1,11 @@
+CREATE DATABASE auction;
+
 create table "USER" ( 
     "User ID" INT not null PRIMARY KEY,
     "Username" char(20) not null,
     "Password" char(50) not null,
     "Email" char(50) not null,
-    "Address ID" INT not null not null,
+    "Address ID" INT not null,
     "PhoneNo" Numeric(20) not null,
     "First Name" char(50) not null,
     "Last Name" char(50) not null
@@ -49,7 +51,7 @@ create table "CATEGORY" (
 
 create table "CUSTOMER_ADDRESS" (
     "User ID" INT REFERENCES "USER"("User ID"),
-    "Address ID" INT REFERENCES "ADDRESS"("Address ID"),
+    "Address ID" INT REFERENCES "ADDRESS"("Address ID")
 ); 
 
 create table "ADDRESS" (
@@ -57,7 +59,7 @@ create table "ADDRESS" (
     "Address Line 1" char(50) not null, 
     "Address Line 2" char(20) not null, 
     "City" char(20) not null, 
-    "Postcode" char(20) not null,
+    "Postcode" char(20) not null
 ); 
 
 create table "BUYER" (
