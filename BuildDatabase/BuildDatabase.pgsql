@@ -1,71 +1,74 @@
 CREATE DATABASE auction;
 
-create table "User" ( 
-    "userID" INT not null PRIMARY KEY,
-    "username" char(20) not null,
-    "password" char(50) not null,
-    "email" char(50) not null,
-    "addressID" INT not null,
-    "phoneNo" Numeric(20) not null,
-    "firstName" char(50) not null,
-    "lastName" char(50) not null
-);
-
-Create table "Sells" (
-    "userID" INT REFERENCES "User"(userID),
-    "itemID" INT REFERENCES "Items"(itemID)
-);
-
-create table "Watches" (
-    "userID" INT REFERENCES "User"(User ID),
-    "itemID" INT REFERENCES "Items"(Item ID)
-);
-
-create table "BID" (
-    "Bid ID" INT not NULL PRIMARY KEY,
-    "User ID" INT REFERENCES "USER"("User ID"),
-    "Item ID" INT REFERENCES "ITEMS"("Item ID"),
-    "Bid Price" numeric (20),
-    "Bid Date" DATE
-);
-
-create table "ITEMS" ( 
-    "Item ID" INT not NULL PRIMARY KEY,
-    "User ID" INT not NULL REFERENCES "USER"("User ID"),
-    "Item Name" char(50) not NULL,
-    "Item Image" bytea not NULL,
-    "Item Description" char(500) not NULL,
-    "Item Condition" char(20) not NULL,
-    "Reservation Price" Numeric(20) not NULL,
-    "Starting Price" numeric(20) not NULL,
-    "Current Price" numeric(20) not NULL,
-    "Category Name" char(20) not NULL REFERENCES "CATEGORY"("Category Name"),
-    "Listing Date" DATE not NULL,
-    "End Date" DATE not NULL,
-    "Delivery Price" Numeric(20) not NULL
-);
-
-create table "CATEGORY" (
-    "Category Name" Char(50) not NULL PRIMARY KEY
-);
-
-create table "CUSTOMER_ADDRESS" (
-    "User ID" INT REFERENCES "USER"("User ID"),
-    "Address ID" INT REFERENCES "ADDRESS"("Address ID")
+CREATE TABLE "Address" (
+    addressID SERIAL NOT NULL, 
+    addressLine1 CHAR(50) NOT NULL, 
+    addressLine2 CHAR(20), 
+    city CHAR(20) NOT NULL, 
+    postcode CHAR(20) NOT NULL
 ); 
 
-create table "ADDRESS" (
-    "Address ID" INT not null, 
-    "Address Line 1" char(50) not null, 
-    "Address Line 2" char(20) not null, 
-    "City" char(20) not null, 
-    "Postcode" char(20) not null
-); 
-
-create table "BUYER" (
-    "User ID" INT REFERENCES "USER"("User ID")
+CREATE TABLE "User" ( 
+    userID SERIAL PRIMARY KEY,
+    username CHAR(20) NOT NULL,
+    password CHAR(50) NOT NULL,
+    email CHAR(50) NOT NULL,
+    addressID INT NOT NULL REFERENCES "Address"(addressID),
+    phoneNo NUMERIC(20) NOT NULL,
+    firstName CHAR(50) NOT NULL,
+    lastName CHAR(50) NOT NULL
 );
 
-create table "SELLER" (
-    "User ID" INT REFERENCES "USER"("User ID")
+CREATE TABLE "Category" (
+    categoryName CHAR(50) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE "Items" ( 
+    itemID SERIAL PRIMARY KEY,
+    userID INT NOT NULL REFERENCES "User"(userID),
+    itemName CHAR(50) NOT NULL,
+    itemImage bytea NOT NULL,
+    itemDescription CHAR(500) NOT NULL,
+    itemCondition CHAR(20) NOT NULL,
+    reservationPrice NUMERIC(20) NOT NULL,
+    startingPrice NUMERIC(20) NOT NULL,
+    currentPrice NUMERIC(20) NOT NULL,
+    categoryName CHAR(20) NOT NULL REFERENCES "Category"(categoryName),
+    listingDate DATE NOT NULL,
+    endDate DATE NOT NULL,
+    deliveryPrice NUMERIC(20) NOT NULL
+);
+
+CREATE TABLE "Sells" (
+    userID INT REFERENCES "User"(userID),
+    itemID INT REFERENCES "Items"(itemID)
+);
+
+CREATE TABLE "Watches" (
+    userID INT REFERENCES "User"(userID),
+    itemID INT REFERENCES "Items"(Item ID)
+);
+
+CREATE TABLE "Bid" (
+    bidID SERIAL PRIMARY KEY,
+    userID INT REFERENCES "User"(userID),
+    itemID INT REFERENCES "Items"(itemID),
+    bidPrice numeric (20),
+    bidDate DATE
+);
+
+
+CREATE TABLE "CustomerAddress" (
+    userID INT REFERENCES "User"(userID),
+    addressID INT REFERENCES "Address"(addressID)
+); 
+
+
+
+CREATE TABLE "Buyer" (
+    userID SERIAL REFERENCES "User"(userID)
+);
+
+CREATE TABLE "Seller" (
+    User ID SERIAL REFERENCES "User"(userID)
 );
