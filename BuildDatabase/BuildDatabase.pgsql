@@ -1,18 +1,18 @@
 CREATE DATABASE auction;
 
-create table "USER" ( 
-    "User ID" INT not null PRIMARY KEY,
-    "Username" char(20) not null,
-    "Password" char(50) not null,
-    "Email" char(50) not null,
-    "Address ID" INT not null,
-    "PhoneNo" Numeric(20) not null,
-    "First Name" char(50) not null,
-    "Last Name" char(50) not null
+create table "User" ( 
+    "userID" INT not null PRIMARY KEY,
+    "username" char(20) not null,
+    "password" char(50) not null,
+    "email" char(50) not null,
+    "addressID" INT not null,
+    "phoneNo" Numeric(20) not null,
+    "firstName" char(50) not null,
+    "lastName" char(50) not null
 );
 
 Create table "SELLS" (
-    "User ID" INT REFERENCES "USER"("User ID"),
+    "userID" INT REFERENCES "USER"("User ID"),
     "Item ID" INT REFERENCES "ITEMS"("Item ID")
 );
 
