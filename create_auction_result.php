@@ -6,6 +6,8 @@
 
     php is terrible
 
+    blah
+
 // This function takes the form data and adds the new auction to the database.
 
 /* TODO #1: Connect to MySQL database (perhaps by requiring a file that
