@@ -1,7 +1,5 @@
-CREATE DATABASE auction;
-
 CREATE TABLE "Address" (
-    addressID SERIAL NOT NULL, 
+    addressID SERIAL NOT NULL PRIMARY KEY, 
     addressLine1 CHAR(50) NOT NULL, 
     addressLine2 CHAR(20), 
     city CHAR(20) NOT NULL, 
@@ -46,7 +44,7 @@ CREATE TABLE "Sells" (
 
 CREATE TABLE "Watches" (
     userID INT REFERENCES "User"(userID),
-    itemID INT REFERENCES "Items"(Item ID)
+    itemID INT REFERENCES "Items"(itemID)
 );
 
 CREATE TABLE "Bid" (
@@ -70,5 +68,5 @@ CREATE TABLE "Buyer" (
 );
 
 CREATE TABLE "Seller" (
-    User ID SERIAL REFERENCES "User"(userID)
+    userID SERIAL REFERENCES "User"(userID)
 );
