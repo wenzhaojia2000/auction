@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="auctionDetails" class="col-sm-2 col-form-label text-right">Details</label>
+          <label for="auctionDetails" class="col-sm-2 col-form-label text-right">Description</label>
           <div class="col-sm-10">
             <textarea class="form-control" id="auctionDetails" rows="4"></textarea>
             <small id="detailsHelp" class="form-text text-muted">Full details of the listing to help bidders decide if it's what they're looking for.</small>
@@ -49,6 +49,25 @@
               <option value="populated">populated from a database?</option>
             </select>
             <small id="categoryHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Select a category for this item.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="itemCondition" class="col-sm-2 col-form-label text-right">Condition</label>
+          <div class="col-sm-10">
+            <select class="form-control" id="itemCondition">
+              <option selected>Choose...</option>
+              <option value="new">New</option>
+              <option value="used">Used</option>
+              <option value="broken">Broken</option>
+            </select>
+            <small id="conditionHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Select the item condition.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="auctionCategory" class="col-sm-2 col-form-label text-right">Image(s)</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="itemImage" type="file" name="files[]" multiple/>
+            <small id="imageImageHelp" class="form-text text-muted">Choose one or more images of the item. Supported image formats: .jpeg, .jpg, .png, .gif</small>
           </div>
         </div>
         <div class="form-group row">
@@ -73,6 +92,24 @@
               <input type="number" class="form-control" id="auctionReservePrice">
             </div>
             <small id="reservePriceHelp" class="form-text text-muted">Optional. Auctions that end below this price will not go through. This value is not displayed in the auction listing.</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="deliveryPrice" class="col-sm-2 col-form-label text-right">Delivery</label>
+          <div class="col-sm-10">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="deliveryType" id="deliveryNone" value="none" checked>
+              <label class="form-check-label" for="deliveryNone">No delivery</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="deliveryType" id="deliveryPaid" value="paid">
+              <label class="form-check-label" for="deliveryPaid">Paid delivery</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="deliveryType" id="deliveryFree" value="free">
+              <label class="form-check-label" for="deliveryPaid">Free delivery</label>
+            </div>
+            <small id="deliveryPriceHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Choose whether the buyer picks up the item themselves (no delivery), whether the item should be delivered by mail (paid delivery), or whether the price of delivery is already included in the price (free delivery).</small>
           </div>
         </div>
         <div class="form-group row">
