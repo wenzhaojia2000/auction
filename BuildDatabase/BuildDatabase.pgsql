@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     addressLine1 CHAR(50) NOT NULL, 
     addressLine2 CHAR(20), 
     city CHAR(20) NOT NULL, 
-    postcode CHAR(20) NOT NULL
+    postcode CHAR(20) NOT NULL,
     phoneNo NUMERIC(20) NOT NULL,
     firstName CHAR(50) NOT NULL,
     lastName CHAR(50) NOT NULL
