@@ -1,3 +1,5 @@
+<!-- NO ACTION HERE  -->
+
 <?php
 
 // display_time_remaining:
