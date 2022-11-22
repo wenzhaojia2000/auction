@@ -1,6 +1,21 @@
 <?php include_once("header.php")?>
 
+
+
 <div class="container">
+
+<!-- Popup that checks using GET is there is an error in the url, and if there is sends a popup with $error on
+this will just spit out the first error
+
+
+if {is_null($_GET['error'])){
+  <div class="popup">
+  <span class="popuptext" id="myPopup">Popup text...</span>
+</div>
+
+} -->
+
+
 <h2 class="my-3">Register new account</h2>
 
 <!-- Create auction form -->
