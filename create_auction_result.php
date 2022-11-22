@@ -6,8 +6,7 @@
 
 // This function takes the form data and adds the new auction to the database.
 
-/* TODO #1: Connect to MySQL database (perhaps by requiring a file that
-            already does this). */
+/* TODO #1: establish the connection with the PostgreSQL database
 
 
 /* TODO #2: Extract form data into variables. Because the form was a 'post'
@@ -15,6 +14,7 @@
             $POST['auctionDetails'], etc. Perform checking on the data to
             make sure it can be inserted into the database. If there is an
             issue, give some semi-helpful feedback to user. */
+
 
 // Uploads files locally to a directory "images/". Doesn't add to database yet.
 // From https://stackoverflow.com/questions/24895170/multiple-image-upload-php-form-with-one-input
