@@ -4,16 +4,30 @@
 
 <?php
 
-// This function takes the form data and adds the new auction to the database.
+//establish the connection with the PostgreSQL database */
 
-/* TODO #1: establish the connection with the PostgreSQL database
-
+require_once 'database.php';
 
 /* TODO #2: Extract form data into variables. Because the form was a 'post'
             form, its data can be accessed via $POST['auctionTitle'], 
             $POST['auctionDetails'], etc. Perform checking on the data to
             make sure it can be inserted into the database. If there is an
             issue, give some semi-helpful feedback to user. */
+
+// LIST OF VARIABLES
+itemName
+auctionCategory
+   - all category options
+itemCondition 
+   - 3 options
+image
+auctionStartPrice
+auctionReservePrice
+
+// entries are correctly entered (entries are not null)
+
+
+
 
 
 // Uploads files locally to a directory "images/". Doesn't add to database yet.
