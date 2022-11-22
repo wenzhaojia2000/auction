@@ -1,20 +1,20 @@
 <?php include_once("header.php")?>
 
-
-
 <div class="container">
 
-<!-- Popup that checks using GET is there is an error in the url, and if there is sends a popup with $error on
+<!-- 
+  Popup that checks using GET is there is an error in the url, and if there is sends a popup with $error on
 this will just spit out the first error
+-->
 
-
+<?php
 if {is_null($_GET['error'])){
-  <div class="popup">
-  <span class="popuptext" id="myPopup">Popup text...</span>
-</div>
-
-} -->
-
+} else {
+  echo "\t"."<div class="popup">"
+  echo "\t\t"."<span class="popuptext" id="myPopup"> $error </span>"
+  echo "\t"."</div>"
+}
+?>
 
 <h2 class="my-3">Register new account</h2>
 
