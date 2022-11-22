@@ -3,7 +3,7 @@
 // TODO: Extract $_POST variables, check they're OK, and attempt to create
 // an account. Notify user of success/failure and redirect/give navigation 
 // options.
-require_once 'index.php';
+require_once 'database.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -70,10 +70,10 @@ if($_POST['password']!==$_POST['passwordConfirmation']){
 
 // check username has not been taken 
 
-$query = "SELECT COUNT(username) IN 'User' WHERE username =" . $_POST['username'];
+$query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
 // pg_query($query)
 
-if(pg_query($query)>0){
+if(pg_query($connection, $query)>0){
     $error = "Username is taken. Try again!";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
@@ -92,5 +92,5 @@ VALUES ('$username', '$password', '$email', '$addressLine1', '$addressLine2', '$
 pg_query($query);
 
 //redirect to browse.php after 5 second
-header("refresh:5;url=browse.php");
+// header("refresh:5;url=browse.php");
 ?>
