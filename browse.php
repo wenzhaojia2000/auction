@@ -99,6 +99,10 @@
 <div class="container mt-5">
 
 <!-- TODO: If result set is empty, print an informative message. Otherwise... -->
+<?php 
+if ($num_results==0){
+  echo 'No results matched your query'
+}
 
 <ul class="list-group">
 

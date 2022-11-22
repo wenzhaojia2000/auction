@@ -1,3 +1,5 @@
+<!-- NO ACTION HERE  -->
+
 <?php
   // FIXME: At the moment, I've allowed these values to be set manually.
   // But eventually, with a database, these should be set automatically

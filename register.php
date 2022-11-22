@@ -2,38 +2,16 @@
 
 <div class="container">
 
-<!-- 
-  Popup that checks using GET is there is an error in the url, and if there is sends a popup with $error on
-this will just spit out the first error
--->
+<h2 class="my-3">Register new account</h2>
 
-<!-- OLD CODE -->
-<!-- <?php
-if (is_null($_GET['error'])){
-} else {
-  echo "\t"."<div class='popup col-sm-10 text-center'>";
-  echo "\t\t"."<span class='popuptext text-danger' id='myPopup'>" . $_GET['error'] . "</span>";
-  echo "\t"."</div>";
-}
-?> -->
-
-<!-- NEW CODE -->
-
+<!-- Alert that shows up if there is an error with registration -->
 <?php
-if (is_null($_GET['error'])){
-} else {
-  echo "<div id='popup1' class='overlay'>";
-  echo "\t"."<div class='popup'>";
-  echo "\t\t"."<h2>Oops!</h2>";
-  echo "\t\t"."<a class='close' href='#'>&times;</a>";
-  echo "\t\t"."<div class='content'> $_GET['error']";
-  echo "\t\t"."</div>";
-  echo "\t"."</div>";
-  echo "</div>";
+if (isset($_GET['error']) == 1){
+  echo "<div class='alert alert-warning col-sm-12 text-center'><div class='card-body'>";
+  echo "<span class='text-danger' id='myPopup'> <b>Error:</b> " . $_GET['error'] . "</span>";
+  echo "</div></div>";
 }
 ?>
-
-<h2 class="my-3">Register new account</h2>
 
 <!-- Create auction form -->
 <form method="POST" action="process_registration.php">
