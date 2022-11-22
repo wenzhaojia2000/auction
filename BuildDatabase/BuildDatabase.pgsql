@@ -1,17 +1,12 @@
-CREATE TABLE "Address" (
-    addressID SERIAL NOT NULL PRIMARY KEY, 
-    addressLine1 CHAR(50) NOT NULL, 
-    addressLine2 CHAR(20), 
-    city CHAR(20) NOT NULL, 
-    postcode CHAR(20) NOT NULL
-); 
-
 CREATE TABLE "User" ( 
     userID SERIAL PRIMARY KEY,
     username CHAR(20) NOT NULL,
     password CHAR(50) NOT NULL,
-    email CHAR(50) NOT NULL,
-    addressID INT NOT NULL REFERENCES "Address"(addressID),
+    email CHAR(50) NOT NULL, 
+    addressLine1 CHAR(50) NOT NULL, 
+    addressLine2 CHAR(20), 
+    city CHAR(20) NOT NULL, 
+    postcode CHAR(20) NOT NULL
     phoneNo NUMERIC(20) NOT NULL,
     firstName CHAR(50) NOT NULL,
     lastName CHAR(50) NOT NULL
