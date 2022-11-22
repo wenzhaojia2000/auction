@@ -1,7 +1,5 @@
 <?php include_once("header.php")?>
 
-
-
 <div class="container">
 
 <!-- 
@@ -12,9 +10,9 @@ this will just spit out the first error
 <?php
 if {is_null($_GET['error'])){
 } else {
-  echo '<div class="popup">
-  <span class="popuptext" id="myPopup"> $error </span>
-  </div>'
+  echo "\t"."<div class="popup">"
+  echo "\t\t"."<span class="popuptext" id="myPopup"> $error </span>"
+  echo "\t"."</div>"
 }
 ?>
 

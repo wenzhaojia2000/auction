@@ -6,52 +6,52 @@
 require_once 'index.php';
 // entries are correctly entered (entries are not null)
 if(is_null($_POST['username'])){
-    $error = "Please enter a valid username"
+    $error = "Please enter a valid username";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['password'])){
-    $error = "Please enter a valid password"
+    $error = "Please enter a valid password";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['email'])){
-    $error = "Please enter a valid email"
+    $error = "Please enter a valid email";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['firstName'])){
-    $error = "Please enter a first name"
+    $error = "Please enter a first name";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['lastName'])){
-    $error = "Please enter a last name"
+    $error = "Please enter a last name";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['addressLine1'])){
-    $error = "Please enter a valid address"
+    $error = "Please enter a valid address";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['phoneNo'])){
-    $error = "Please enter a valid phone number"
+    $error = "Please enter a valid phone number";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['city'])){
-    $error = "Please enter a valid city"
+    $error = "Please enter a valid city";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if(is_null($_POST['postcode'])){
-    $error = "Please enter a valid postcode"
+    $error = "Please enter a valid postcode";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
 if($_POST['password']!==$_POST['passwordConfirmation']){
-    $error = "Passwords do not match"
+    $error = "Passwords do not match";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
 }
@@ -62,7 +62,7 @@ $query = "SELECT COUNT(username) IN 'User' WHERE username = $_POST['username']"
 pg_query($query)
 
 if(pg_query($query)>0){
-    $error = "Username is taken. Try again!"
+    $error = "Username is taken. Try again!";
     header('Location: register.php?error=' . urlencode($error));
 	 exit();
   } else {
