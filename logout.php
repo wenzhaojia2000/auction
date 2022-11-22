@@ -1,3 +1,5 @@
+<!-- NO ACTION HERE  -->
+
 <?php
 
 session_start();
