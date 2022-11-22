@@ -8,11 +8,11 @@ this will just spit out the first error
 -->
 
 <?php
-if {is_null($_GET['error'])){
+if (is_null($_GET['error'])){
 } else {
-  echo "\t"."<div class="popup">"
-  echo "\t\t"."<span class="popuptext" id="myPopup"> $error </span>"
-  echo "\t"."</div>"
+  echo "\t"."<div class='popup'>";
+  echo "\t\t"."<span class='popuptext' id='myPopup'>" . $_GET['error'] . "</span>";
+  echo "\t"."</div>";
 }
 ?>
 
