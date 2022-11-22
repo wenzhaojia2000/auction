@@ -9,7 +9,7 @@
 if (isset($_GET['error']) == 1){
   echo "<div class='alert alert-warning col-sm-12 text-center'><div class='card-body'>";
   echo "<span class='text-danger' id='myPopup'> <b>Error:</b> " . $_GET['error'] . "</span>";
-  echo "</div>";
+  echo "</div></div>";
 }
 ?>
 
