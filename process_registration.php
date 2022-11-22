@@ -73,11 +73,11 @@ if($_POST['password']!==$_POST['passwordConfirmation']){
 $query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
 $res = pg_query($connection, $query);
 
-if (pg_fetch_result($res, 0) > 0){
+if (pg_fetch_result($res, 0) > 0) {
     $error = "Username is taken. Try again!";
     echo (pg_fetch_result($res, 0) > 0);
-    // header('Location: register.php?error=' . urlencode($error));
-	// exit();
+    header('Location: register.php?error=' . urlencode($error));
+	exit();
   } else {
 }
 
