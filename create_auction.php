@@ -1,14 +1,5 @@
 <?php include_once("header.php")?>
 
-<!-- WE ARE GOING TO DELETE THIS: <?php
-/* (Uncomment this block to redirect people without selling privileges away from this page)
-  // If user is not logged in or not a seller, they should not be able to
-  // use this page.
-  if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 'seller') {
-    header('Location: browse.php');
-  }
-*/
-?> -->
 <div class="container">
 
 <!-- Create auction form -->
@@ -36,7 +27,7 @@
           <div class="col-sm-10">
             <select class="form-control" id="auctionCategory" name="category">
               <option selected>Choose...</option>
-              <option value="fill">Fill me in</option>
+              <option value="fill"> Fill me in</option>
               <option value="with">with options</option>
               <option value="populated">populated from a database?</option>
             </select>
