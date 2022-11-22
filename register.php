@@ -4,17 +4,19 @@
 
 <div class="container">
 
-<!-- Popup that checks using GET is there is an error in the url, and if there is sends a popup with $error on
+<!-- 
+  Popup that checks using GET is there is an error in the url, and if there is sends a popup with $error on
 this will just spit out the first error
+-->
 
-
+<?php
 if {is_null($_GET['error'])){
-  <div class="popup">
-  <span class="popuptext" id="myPopup">Popup text...</span>
-</div>
-
-} -->
-
+} else {
+  echo '<div class="popup">
+  <span class="popuptext" id="myPopup"> $error </span>
+  </div>'
+}
+?>
 
 <h2 class="my-3">Register new account</h2>
 
