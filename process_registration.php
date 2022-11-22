@@ -4,6 +4,18 @@
 // an account. Notify user of success/failure and redirect/give navigation 
 // options.
 require_once 'index.php';
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+$email = $_POST['email'];
+$firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
+$addressLine1 = $_POST['addressLine1'];
+$addressLine2 = $_POST['addressLine2'];
+$city = $_POST['city'];
+$postcode = $_POST['postcode'];
+$phoneNo = $_POST['phoneNo'];
+
 // entries are correctly entered (entries are not null)
 if(is_null($_POST['username'])){
     $error = "Please enter a valid username";
@@ -58,8 +70,8 @@ if($_POST['password']!==$_POST['passwordConfirmation']){
 
 // check username has not been taken 
 
-$query = "SELECT COUNT(username) IN 'User' WHERE username = $_POST['username']";
-pg_query($query)
+$query = "SELECT COUNT(username) IN 'User' WHERE username =" . $_POST['username'];
+// pg_query($query)
 
 if(pg_query($query)>0){
     $error = "Username is taken. Try again!";
@@ -75,8 +87,8 @@ echo('<div class="text-center">You are now registered. You will be redirected sh
 // sending all of the data if successful to the database 
 
 $query = "INSERT INTO 'User' (username, password, email, addressLine1, addressLine2, city, postcode, phoneNo, firstName, lastName)
-VALUES ($_POST['username'], $_POST['password'], $_POST['email'], $_POST['addressLine1'], $_POST['addressLine2'], $_POST['city'],
-$_POST['postcode'], $_POST['phoneNo'], $_POST['firstName'], $_POST['lastName'])";
+VALUES ('$username', '$password', '$email', '$addressLine1', '$addressLine2', '$city',
+'$postcode', '$phoneNo', '$firstName', '$lastName')";
 pg_query($query);
 
 //redirect to browse.php after 5 second

@@ -10,8 +10,8 @@ this will just spit out the first error
 <?php
 if (is_null($_GET['error'])){
 } else {
-  echo "\t"."<div class='popup'>";
-  echo "\t\t"."<span class='popuptext' id='myPopup'>" . $_GET['error'] . "</span>";
+  echo "\t"."<div class='popup col-sm-10 text-center'>";
+  echo "\t\t"."<span class='popuptext text-danger' id='myPopup'>" . $_GET['error'] . "</span>";
   echo "\t"."</div>";
 }
 ?>
