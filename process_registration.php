@@ -7,6 +7,7 @@ require_once 'database.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];
+$passwordConfirmation = $_POST['passwordConfirmation'];
 $email = $_POST['email'];
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
@@ -17,55 +18,55 @@ $postcode = $_POST['postcode'];
 $phoneNo = $_POST['phoneNo'];
 
 // entries are correctly entered (entries are not null)
-if(is_null($_POST['username'])){
+if(empty($username) == 1){
     $error = "Please enter a valid username";
     header('Location: register.php?error=' . urlencode($error));
-	 exit();
+	exit();
 }
-if(is_null($_POST['password'])){
-    $error = "Please enter a valid password";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
-}
-if(is_null($_POST['email'])){
+if(empty($email) == 1){
     $error = "Please enter a valid email";
     header('Location: register.php?error=' . urlencode($error));
-	 exit();
+	exit();
 }
-if(is_null($_POST['firstName'])){
-    $error = "Please enter a first name";
+if(empty($password) == 1){
+    $error = "Please enter a valid password";
     header('Location: register.php?error=' . urlencode($error));
-	 exit();
+	exit();
 }
-if(is_null($_POST['lastName'])){
-    $error = "Please enter a last name";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
-}
-if(is_null($_POST['addressLine1'])){
-    $error = "Please enter a valid address";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
-}
-if(is_null($_POST['phoneNo'])){
-    $error = "Please enter a valid phone number";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
-}
-if(is_null($_POST['city'])){
-    $error = "Please enter a valid city";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
-}
-if(is_null($_POST['postcode'])){
-    $error = "Please enter a valid postcode";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
-}
-if($_POST['password']!==$_POST['passwordConfirmation']){
+if($password !== $passwordConfirmation){
     $error = "Passwords do not match";
     header('Location: register.php?error=' . urlencode($error));
-	 exit();
+	exit();
+}
+if(empty($firstName) == 1){
+    $error = "Please enter a first name";
+    header('Location: register.php?error=' . urlencode($error));
+	exit();
+}
+if(empty($lastName) == 1){
+    $error = "Please enter a last name";
+    header('Location: register.php?error=' . urlencode($error));
+	exit();
+}
+if(empty($phoneNo) == 1){
+    $error = "Please enter a valid phone number";
+    header('Location: register.php?error=' . urlencode($error));
+	exit();
+}
+if(empty($addressLine1) == 1){
+    $error = "Please enter a valid address";
+    header('Location: register.php?error=' . urlencode($error));
+	exit();
+}
+if(empty($city) == 1){
+    $error = "Please enter a valid city";
+    header('Location: register.php?error=' . urlencode($error));
+    exit();
+}
+if(empty($postcode) == 1){
+    $error = "Please enter a valid postcode";
+    header('Location: register.php?error=' . urlencode($error));
+	exit();
 }
 
 // check username has not been taken 
