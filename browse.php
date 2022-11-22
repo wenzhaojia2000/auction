@@ -28,6 +28,19 @@
       <div class="form-group">
         <label for="cat" class="sr-only">Search within:</label>
         <select class="form-control" id="cat">
+
+          <!-- write a loop to input each category into the drop down
+        $x = 1;
+
+        while($x <= 5) {
+        echo "The number is: $x <br>";
+        $x++;
+        }
+        
+        -->
+        <!-- <?php $query = "SELECT Category FROM \"Categories\" where id = $x";
+$res = pg_query($connection, $query);?>-->
+
           <option selected value="all">All categories</option>
           <option value="fill">Fill me in</option>
           <option value="with">with options</option>
@@ -103,6 +116,7 @@
 if ($num_results==0){
   echo 'No results matched your query'
 }
+?>
 
 <ul class="list-group">
 
