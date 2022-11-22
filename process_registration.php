@@ -71,12 +71,13 @@ if($_POST['password']!==$_POST['passwordConfirmation']){
 // check username has not been taken 
 
 $query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
-// pg_query($query)
+$res = pg_query($connection, $query);
 
-if(pg_query($connection, $query)>0){
+if (pg_fetch_result($res, 0) > 0){
     $error = "Username is taken. Try again!";
-    header('Location: register.php?error=' . urlencode($error));
-	 exit();
+    echo (pg_fetch_result($res, 0) > 0);
+    // header('Location: register.php?error=' . urlencode($error));
+	// exit();
   } else {
 }
 
@@ -86,7 +87,7 @@ echo('<div class="text-center">You are now registered. You will be redirected sh
 
 // sending all of the data if successful to the database 
 
-$query = "INSERT INTO 'User' (username, password, email, addressLine1, addressLine2, city, postcode, phoneNo, firstName, lastName)
+$query = "INSERT INTO \"User\" (username, password, email, addressLine1, addressLine2, city, postcode, phoneNo, firstName, lastName)
 VALUES ('$username', '$password', '$email', '$addressLine1', '$addressLine2', '$city',
 '$postcode', '$phoneNo', '$firstName', '$lastName')";
 pg_query($query);
