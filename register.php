@@ -7,12 +7,29 @@
 this will just spit out the first error
 -->
 
-<?php
+<!-- OLD CODE -->
+<!-- <?php
 if (is_null($_GET['error'])){
 } else {
   echo "\t"."<div class='popup col-sm-10 text-center'>";
   echo "\t\t"."<span class='popuptext text-danger' id='myPopup'>" . $_GET['error'] . "</span>";
   echo "\t"."</div>";
+}
+?> -->
+
+<!-- NEW CODE -->
+
+<?php
+if (is_null($_GET['error'])){
+} else {
+  echo "<div id='popup1' class='overlay'>";
+  echo "\t"."<div class='popup'>";
+  echo "\t\t"."<h2>Oops!</h2>";
+  echo "\t\t"."<a class='close' href='#'>&times;</a>";
+  echo "\t\t"."<div class='content'> $_GET['error']";
+  echo "\t\t"."</div>";
+  echo "\t"."</div>";
+  echo "</div>";
 }
 ?>
 
