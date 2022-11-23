@@ -1,4 +1,5 @@
-<?php include_once("header.php")?>
+<?php include_once("header.php");
+include "database.php"?>
 <?php require("utilities.php")?>
 
 <div class="container">
@@ -28,23 +29,16 @@
       <div class="form-group">
         <label for="cat" class="sr-only">Search within:</label>
         <select class="form-control" id="cat">
-
-          <!-- write a loop to input each category into the drop down
-        $x = 1;
-
-        while($x <= 5) {
-        echo "The number is: $x <br>";
-        $x++;
-        }
-        
-        -->
-        <!-- <?php $query = "SELECT Category FROM \"Categories\" where id = $x";
-$res = pg_query($connection, $query);?>-->
-
           <option selected value="all">All categories</option>
-          <option value="fill">Fill me in</option>
-          <option value="with">with options</option>
-          <option value="populated">populated from a database?</option>
+          <?php
+            //this is a loop to auto insert the categories into the drop down
+            $query = "SELECT * FROM \"Category\"";
+            $categories = pg_query($connection, $query);
+            while ($row = pg_fetch_assoc($categories)) {
+              $categoryName = $row['categoryname'];
+              echo "<option value='$categoryName'> $categoryName </option>";
+            }
+          ?>
         </select>
       </div>
     </div>
