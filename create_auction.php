@@ -1,4 +1,7 @@
-<?php include_once("header.php")?>
+<?php 
+include_once("header.php");
+require_once 'database.php';
+?>
 
 <div class="container">
 
@@ -27,18 +30,16 @@
           <div class="col-sm-10">
             <select class="form-control" id="auctionCategory" name="category">
               <option selected>Choose...</option>
-              <?php
-              //this is a loop to auto insert the categories into the drop down
-                $query = "SELECT COUNT(*) FROM Category";
-                $rowno = pg_query($connection, $query) - 1;
-                $ID = 0;
-                for($ID; $ID = $rowno; $ID++){
-                  $query = "SELECT * FROM Category WHERE ID = $ID"
-                  $indCategory = pg_query($connection, $query)
-                  echo option value="$indCategory"> $indCategory </option>;
-                }
+                <?php
+                  //this is a loop to auto insert the categories into the drop down
+                  $query = "SELECT * FROM \"Category\"";
+                  $categories = pg_query($connection, $query);
+                  while ($row = pg_fetch_assoc($categories)) {
+                    $categoryName = $row['categoryname'];
+                    echo "<option value='$categoryName'> $categoryName </option>";
+                  }
+                ?>
                 // the loop ends here
-              ?>
             </select>
             <small id="categoryHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Select a category for this item.</small>
           </div>

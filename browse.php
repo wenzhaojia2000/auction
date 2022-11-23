@@ -114,7 +114,7 @@ $res = pg_query($connection, $query);?>-->
 <!-- TODO: If result set is empty, print an informative message. Otherwise... -->
 <?php 
 if ($num_results==0){
-  echo 'No results matched your query'
+  echo 'No results matched your query';
 }
 ?>
 
