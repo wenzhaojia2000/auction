@@ -52,16 +52,15 @@ CREATE TABLE "Bid" (
 
 
 CREATE TABLE "CustomerAddress" (
-    userID INT REFERENCES "User"(userID),
-    addressID INT REFERENCES "Address"(addressID)
+    userID INT REFERENCES "User"(userID)
 ); 
 
 
 
 CREATE TABLE "Buyer" (
-    userID SERIAL REFERENCES "User"(userID)
+    userID INT REFERENCES "User"(userID)
 );
 
 CREATE TABLE "Seller" (
-    userID SERIAL REFERENCES "User"(userID)
+    userID INT REFERENCES "User"(userID)
 );
