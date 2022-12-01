@@ -1,7 +1,7 @@
 CREATE TABLE "User" ( 
     userID SERIAL PRIMARY KEY,
     username CHAR(20) NOT NULL,
-    password CHAR(50) NOT NULL,
+    password CHAR(60) NOT NULL,
     email CHAR(50) NOT NULL, 
     addressLine1 CHAR(50) NOT NULL, 
     addressLine2 CHAR(20), 

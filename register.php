@@ -16,14 +16,14 @@ if (isset($_GET['error']) == 1){
 <!-- Create auction form -->
 <form method="POST" action="process_registration.php">
   <div class="form-group row">
-    <label for="accountType" class="col-sm-2 col-form-label text-right">Registering as a:</label>
+    <label class="col-sm-2 col-form-label text-right">Registering as a:</label>
     <div class="col-sm-9" style="padding-top: 10px">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="accountType" id="accountBuyer" value="buyer" checked>
+        <input class="form-check-input" type="checkbox" name="accountBuyer" id="accountBuyer" value="1" checked>
         <label class="form-check-label" for="accountBuyer">Buyer</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="accountType" id="accountSeller" value="seller">
+        <input class="form-check-input" type="checkbox" name="accountSeller" id="accountSeller" value="1">
         <label class="form-check-label" for="accountSeller">Seller</label>
       </div>
       <small id="accountTypeHelp" class="form-text-inline text-muted"><span class="text-danger">* Required.</span></small>
