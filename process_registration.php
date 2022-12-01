@@ -5,6 +5,12 @@
 // options.
 require_once 'database.php';
 
+// start a session. this allows variables to be passed over to other php
+// files without using POST. in particular, if the process is unsuccessful,
+// we need to send the error message(s) back to register.php.
+session_start();
+$_SESSION['error'] = array();
+
 $username = $_POST['username'];
 $password = $_POST['password'];
 $passwordConfirmation = $_POST['passwordConfirmation'];
@@ -19,73 +25,56 @@ $phoneNo = $_POST['phoneNo'];
 
 // check that at least one of the account checkboxes are checked
 if (!isset($_POST['accountBuyer']) && !isset($_POST['accountSeller'])) {
-    $error = "You cannot be neither a buyer or seller";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
+    $_SESSION['error'][] = "You cannot be neither a buyer or seller";
 }
 
 // check entries are correctly entered (entries are not empty)
-if (empty($username) == 1){
-    $error = "Please enter a valid username";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($email) == 1){
-    $error = "Please enter a valid email";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($password) == 1){
-    $error = "Please enter a valid password";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if ($password !== $passwordConfirmation){
-    $error = "Passwords do not match";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($firstName) == 1){
-    $error = "Please enter a first name";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($lastName) == 1){
-    $error = "Please enter a last name";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($phoneNo) == 1){
-    $error = "Please enter a valid phone number";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($addressLine1) == 1){
-    $error = "Please enter a valid address";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($city) == 1){
-    $error = "Please enter a valid city";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
-}
-if (empty($postcode) == 1){
-    $error = "Please enter a valid postcode";
-    header('Location: register.php?error=' . urlencode($error));
-    exit();
+if (empty($username) == 1) {
+    $_SESSION['error'][] = "Please enter a valid username";
+} else {
+    // check username has not been taken 
+    $query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
+    $res = pg_query($connection, $query);
+
+    if (pg_fetch_result($res, 0) > 0) {
+        $_SESSION['error'][] = "Username is taken. Try again!";
+    }
 }
 
-// check username has not been taken 
-$query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
-$res = pg_query($connection, $query);
+if (empty($email) == 1) {
+    $_SESSION['error'][] = "Please enter a valid email";
+}
 
-if (pg_fetch_result($res, 0) > 0) {
-    $error = "Username is taken. Try again!";
-    // echo (pg_fetch_result($res, 0) > 0);
-    header('Location: register.php?error=' . urlencode($error));
+// we just want to return one of these errors.
+if (empty($password) == 1) {
+    $_SESSION['error'][] = "Please enter a valid password";
+} else if ($password !== $passwordConfirmation) {
+    $_SESSION['error'][] = "Passwords do not match";
+}
+
+if (empty($firstName) == 1) {
+    $_SESSION['error'][] = "Please enter a first name";
+}
+if (empty($lastName) == 1) {
+    $_SESSION['error'][] = "Please enter a last name";
+}
+if (empty($phoneNo) == 1) {
+    $_SESSION['error'][] = "Please enter a valid phone number";
+}
+if (empty($addressLine1) == 1) {
+    $_SESSION['error'][] = "Please enter a valid address";
+}
+if (empty($city) == 1) {
+    $_SESSION['error'][] = "Please enter a valid city";
+}
+if (empty($postcode) == 1) {
+    $_SESSION['error'][] = "Please enter a valid postcode";
+}
+
+// if there are errors, return user to register.php and stop code below from executing
+if ($_SESSION['error']) {
+    header('Location: register.php');
     exit();
-  } else {
 }
 
 // hash password
@@ -109,6 +98,9 @@ if (isset($_POST['accountSeller'])) {
     pg_query("INSERT INTO \"Seller\" VALUES ($userID)");
 }
 
-//redirect to browse.php after 5 second
-// header("refresh:5;url=browse.php");
+// no errors, so we can stop the session.
+session_destroy();
+
+//redirect to browse.php after 5 seconds
+header("refresh:5; url=browse.php");
 ?>

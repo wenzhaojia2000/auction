@@ -4,12 +4,14 @@
 
 <h2 class="my-3">Register new account</h2>
 
-<!-- Alert that shows up if there is an error with registration -->
+<!-- Alert that shows up if there are errors with registration -->
 <?php
-if (isset($_GET['error']) == 1){
-  echo "<div class='alert alert-warning col-sm-12 text-center'><div class='card-body'>";
-  echo "<span class='text-danger' id='myPopup'> <b>Error:</b> " . $_GET['error'] . "</span>";
-  echo "</div></div>";
+if (isset($_SESSION['error'])){
+  echo "<div class='alert alert-warning col-sm-12'><div class='card-body'><ul style='margin-bottom: 0px;'>";
+  foreach ($_SESSION['error'] as $error) {
+    echo "<li><span class='text-danger'> <b>Error:</b> " . $error . "</span></li>";
+  }
+  echo "</ul></div></div>";
 }
 ?>
 
