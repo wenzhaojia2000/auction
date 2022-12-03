@@ -157,7 +157,7 @@ SQL;
     $query_data = fetch_all($query_sql);
 
     foreach ($query_data as $item) {
-        print_listing_li($item['itemid'], $item['itemname'], $item['itemdescription'], $item['currentprice'], $item['bids'],
+        print_listing_li($item['itemid'], $item['itemimage'], $item['itemname'], $item['itemdescription'], $item['currentprice'], $item['bids'],
             new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate']))));
     }
     ?>
