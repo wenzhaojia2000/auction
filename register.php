@@ -12,6 +12,8 @@ if (isset($_SESSION['error'])){
     echo "<li><span class='text-danger'> <b>Error:</b> " . $error . "</span></li>";
   }
   echo "</ul></div></div>";
+  // clear all errors afterwards
+  unset($_SESSION['error']);
 }
 ?>
 
@@ -110,7 +112,8 @@ if (isset($_SESSION['error'])){
   </div>
 </form>
 
-<div class="text-center">Already have an account? <a href="" data-toggle="modal" data-target="#loginModal">Login</a>
+<div class="text-center" style="padding-bottom: 10px;">Already have an account? <a href="" data-toggle="modal" data-target="#loginModal">Login</a>
 </div>
 
+</div>
 <?php include_once("footer.php")?>

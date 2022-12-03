@@ -10,4 +10,14 @@
 
 </body>
 
+<footer class="site-footer">
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+     <ul class="navbar-nav align-middle">
+          <li class="nav-item mx-1">
+          <a class="nav-link" href="#">Database Fundamentals Group 22</a>
+          </li>
+     </ul>
+     </nav>
+</footer>
+
 </html>

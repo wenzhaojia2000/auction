@@ -11,17 +11,17 @@ require_once 'database.php';
 session_start();
 $_SESSION['error'] = array();
 
-$username = $_POST['username'];
-$password = $_POST['password'];
-$passwordConfirmation = $_POST['passwordConfirmation'];
-$email = $_POST['email'];
-$firstName = $_POST['firstName'];
-$lastName = $_POST['lastName'];
-$addressLine1 = $_POST['addressLine1'];
-$addressLine2 = $_POST['addressLine2'];
-$city = $_POST['city'];
-$postcode = $_POST['postcode'];
-$phoneNo = $_POST['phoneNo'];
+$username = pg_escape_string($connection, $_POST['username']);
+$password = pg_escape_string($connection, $_POST['password']);
+$passwordConfirmation = pg_escape_string($connection, $_POST['passwordConfirmation']);
+$email = pg_escape_string($connection, $_POST['email']);
+$firstName = pg_escape_string($connection, $_POST['firstName']);
+$lastName = pg_escape_string($connection, $_POST['lastName']);
+$addressLine1 = pg_escape_string($connection, $_POST['addressLine1']);
+$addressLine2 = pg_escape_string($connection, $_POST['addressLine2']);
+$city = pg_escape_string($connection, $_POST['city']);
+$postcode = pg_escape_string($connection, $_POST['postcode']);
+$phoneNo = pg_escape_string($connection, $_POST['phoneNo']);
 
 // check that at least one of the account checkboxes are checked
 if (!isset($_POST['accountBuyer']) && !isset($_POST['accountSeller'])) {
@@ -98,8 +98,8 @@ if (isset($_POST['accountSeller'])) {
     pg_query("INSERT INTO \"Seller\" VALUES ($userID)");
 }
 
-// no errors, so we can stop the session.
-session_destroy();
+// no errors, so we unset the variable.
+unset($_SESSION['error']);
 
 //redirect to browse.php after 5 seconds
 header("refresh:5; url=browse.php");
