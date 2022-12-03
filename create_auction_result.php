@@ -58,6 +58,9 @@ if(empty($deliveryType) == 1){
     exit();
 }
 
+if(empty($auctionReservePrice) == 1){
+    $auctionReservePrice = $auctionStartPrice;
+}
 
 $txtGalleryName = date('Ymd');
 
@@ -83,17 +86,17 @@ foreach($_FILES["itemImage"]["tmp_name"] as $key=>$tmp_name) {
 
       $file_name = md5($fileName.$_SESSION['uid']) . '.' . $ext;
 
-      if(in_array($ext,$extension)) {
+      if(in_array($ext, $extension)) {
          if(!file_exists("images/".$txtGalleryName."/".$file_name)) {
             move_uploaded_file($file_tmp=$_FILES["itemImage"]["tmp_name"][$key],"images/".$txtGalleryName."/".$file_name);
+            $fileArr[] = $file_name;
          }
          else {
             $filename=basename($file_name,$ext);
             $newFileName=$filename.time().".".$ext;
             move_uploaded_file($file_tmp=$_FILES["itemImage"]["tmp_name"][$key],"images/".$txtGalleryName."/".$newFileName);
+            $fileArr[] = $newFileName;
          }
-
-          $fileArr[] = $file_name;
       }
       else {
          array_push($error,"$file_name, ");

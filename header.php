@@ -33,22 +33,21 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="index.php"><img src="images/banner.png" alt="eBay Deluxe" style="height:50px"></a>
   <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
 
 <?php
   // Displays either login or logout on the right, depending on user's
   // current status (session).
   if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-    echo '<a class="nav-link" href="logout.php">Logout</a>';
+    echo '<li class="nav-item nav-link"><span>Logged in as <b>' . $_SESSION['username'] . '</b></span></li>';
+    echo '<li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>';
   }
   // don't display login if on register page (there's a seperate button for that)
   // also because the names of the password and email on the login form are the same possibly causing errors.
   else if (basename($_SERVER['PHP_SELF']) !== "register.php") {
-    echo '<button type="button" class="btn nav-link" data-toggle="modal" data-target="#loginModal">Login</button>';
+    echo '<li class="nav-item"><button type="button" class="btn nav-link" data-toggle="modal" data-target="#loginModal">Login</button></li>';
   }
 ?>
 
-    </li>
   </ul>
 </nav>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

@@ -1,4 +1,4 @@
-![Logo](img/index.png)
+![Logo](images/index.png)
 
 # Auction
 
