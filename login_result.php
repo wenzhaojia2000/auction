@@ -16,30 +16,29 @@ $password = $_POST['password'];
 
 if (empty($email)) {
     $error = "Please enter a valid email";
-    echo "<script>alert('{$error}');history.go(-1);</script>";exit;
+    echo "<script>alert('{$error}');history.go(-1);</script>";
     exit();
 }
 
 if (empty($password)) {
     $error = "Please enter a valid password";
-    echo "<script>alert('{$error}');history.go(-1);</script>";exit;
+    echo "<script>alert('{$error}');history.go(-1);</script>";
     exit();
 }
 
-$password = md5($password);
-
 $check_sql = <<<SQL
-select userid,username from "User" where email ='{$email}' and password = '{$password}'
+select userid, username, password from "User" where email = '$email'
 SQL;
 
 $userData = fetch_row($check_sql);
+$passhash = $userData['password'];
+$verify = password_verify($password, $passhash);
 
-if (!$userData) {
+if (!$userData or !$verify) {
     $error = "Please enter a valid account";
-    echo "<script>alert('{$error}');history.go(-1);</script>";exit;
+    echo "<script>alert('{$password}');history.go(-1);</script>";
     exit();
 }
-
 
 session_start();
 $_SESSION['logged_in'] = true;
