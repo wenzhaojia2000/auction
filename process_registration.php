@@ -81,7 +81,7 @@ if ($_SESSION['error']) {
 $passhash = password_hash($password, PASSWORD_DEFAULT);
 
 // message saying you have registered successfully 
-echo('<div class="text-center">You are now registered. You will be redirected shortly.</div>');
+echo('<div class="text-center">You are now registered and will automatically be logged in. You will be redirected shortly.</div>');
 
 // sending all of the data if successful to the database. return the user id of the resulting query.
 $query = "INSERT INTO \"User\" (username, password, email, addressLine1, addressLine2, city, postcode, phoneNo, firstName, lastName)
@@ -93,13 +93,20 @@ $userID = pg_fetch_result($res, 0);
 // adding userid to buyers and sellers table
 if (isset($_POST['accountBuyer'])) {
     pg_query("INSERT INTO \"Buyer\" VALUES ($userID)");
+    $_SESSION['account_buyer'] = True;
 }
 if (isset($_POST['accountSeller'])) {
     pg_query("INSERT INTO \"Seller\" VALUES ($userID)");
+    $_SESSION['account_seller'] = True;
 }
 
 // no errors, so we unset the variable.
 unset($_SESSION['error']);
+
+// log them in
+$_SESSION['logged_in'] = True;
+$_SESSION['username'] = $username;
+$_SESSION['uid'] = $userID;
 
 //redirect to browse.php after 5 seconds
 header("refresh:5; url=browse.php");

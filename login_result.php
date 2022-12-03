@@ -7,12 +7,12 @@ require_once 'database.php';
 // For now, I will just set session variables and redirect.
 
 if (isset($_SESSION['username'])) {
+    // the user is logged in already.
     header('Location:index.php');
 }
 
-
-$email = $_POST['email'];
-$password = $_POST['password'];
+$email = pg_escape_string($connection, $_POST['email']);
+$password = pg_escape_string($connection, $_POST['password']);
 
 if (empty($email)) {
     $error = "Please enter a valid email";
@@ -52,7 +52,7 @@ SQL;
 $buyerUser = fetch_row($buyerSql);
 
 if ($buyerUser) {
-    $_SESSION['account_type'] = "buyer";
+    $_SESSION['account_buyer'] = True;
 }
 
 
@@ -63,7 +63,7 @@ SQL;
 $sellerUser = fetch_row($sellerSql);
 
 if ($sellerUser) {
-    $_SESSION['account_type'] = "seller";
+    $_SESSION['account_seller'] = True;
 }
 
 

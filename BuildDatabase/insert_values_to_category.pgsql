@@ -8,7 +8,7 @@ INSERT INTO "Category" (categoryName) values ('Cars, Motorcycles & Vehicles');
 INSERT INTO "Category" (categoryName) values ('Clothes, Shoes & Accessories');
 INSERT INTO "Category" (categoryName) values ('Coins');
 INSERT INTO "Category" (categoryName) values ('Collectables');
-INSERT INTO "Category" (categoryName) values ('Computers/Tablets & Networling');
+INSERT INTO "Category" (categoryName) values ('Computers/Tablets & Networking');
 INSERT INTO "Category" (categoryName) values ('Crafts');
 INSERT INTO "Category" (categoryName) values ('Dolls & Bears');
 INSERT INTO "Category" (categoryName) values ('DVDS, Films & TV');

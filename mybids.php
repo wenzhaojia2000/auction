@@ -16,7 +16,7 @@
 
   // TODO-DONE: Check user's credentials (cookie/session).
 
-if (!$_SESSION['username'] || $_SESSION['account_type'] != 'buyer') {
+if (!$_SESSION['username'] || $_SESSION['account_buyer'] != True) {
     echo "<div>You do not have permission</div>";
     header("refresh:2;url=browse.php");
 }
@@ -146,6 +146,6 @@ SQL;
 
     </div>
 
+</div>
 
-
-    <?php include_once("footer.php")?>
+<?php include_once("footer.php")?>

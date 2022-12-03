@@ -1,7 +1,7 @@
 CREATE TABLE "User" (
     userID SERIAL PRIMARY KEY,
     username CHAR(20) NOT NULL,
-    password CHAR(50) NOT NULL,
+    password CHAR(60) NOT NULL,
     email CHAR(50) NOT NULL,
     addressLine1 CHAR(50) NOT NULL,
     addressLine2 CHAR(20),
@@ -21,12 +21,12 @@ CREATE TABLE "Items" (
     userID INT NOT NULL REFERENCES "User"(userID),
     itemName CHAR(50) NOT NULL,
     itemImage CHAR(500) NOT NULL,
-    itemDescription CHAR(500) NOT NULL,
+    itemDescription CHAR(5000) NOT NULL,
     itemCondition CHAR(20) NOT NULL,
     reservationPrice NUMERIC(20) NOT NULL,
     startingPrice NUMERIC(20) NOT NULL,
     currentPrice NUMERIC(20) NOT NULL,
-    categoryName CHAR(20) NOT NULL REFERENCES "Category"(categoryName),
+    categoryName CHAR(50) NOT NULL REFERENCES "Category"(categoryName),
     listingDate TIMESTAMP NOT NULL,
     endDate TIMESTAMP NOT NULL,
     deliveryPrice NUMERIC(20) NOT NULL

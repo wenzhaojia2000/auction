@@ -76,12 +76,12 @@ foreach($_FILES["itemImage"]["tmp_name"] as $key=>$tmp_name) {
 
       $cDir = "images/".$txtGalleryName;
       if (! is_dir ( $cDir )) {
-          mkdir($cDir, '0777');
+          mkdir($cDir, '0777', true);
       }
 
       $fileName = explode('.', $file_name)[0];
 
-      $file_name = $txtGalleryName . '/'. md5($fileName.$_SESSION['uid']) . '.' . $ext;
+      $file_name = md5($fileName.$_SESSION['uid']) . '.' . $ext;
 
       if(in_array($ext,$extension)) {
          if(!file_exists("images/".$txtGalleryName."/".$file_name)) {
@@ -103,7 +103,7 @@ foreach($_FILES["itemImage"]["tmp_name"] as $key=>$tmp_name) {
 /* TODO-DONE #3: If everything looks good, make the appropriate call to insert
             data into the database. */
 
-if ($deliveryType == 'none' || $deliveryType == 'fee') {
+if ($deliveryType == 'none' || $deliveryType == 'free') {
     $deliveryPrice = 0;
 } else {
     //todo set a default price

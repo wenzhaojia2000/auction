@@ -14,7 +14,6 @@ select *,(select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bid
 SQL;
     $item = fetch_row($sql);
 
-  // DELETEME: For now, using placeholder data.
   $title = $item['itemname'];
   $description = $item['itemdescription'];
   $current_price = $item['currentprice'];
@@ -114,8 +113,8 @@ SQL;
   </div> <!-- End of right col with bidding info -->
 
 </div> <!-- End of row #2 -->
-
-
+<br/>
+</div>
 
 <?php include_once("footer.php")?>
 

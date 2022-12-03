@@ -31,7 +31,7 @@
 
 <!-- Navbars -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.php"><img src="img/banner.png" alt="eBay Deluxe" style="height:50px"></a>
+  <a class="navbar-brand" href="index.php"><img src="images/banner.png" alt="eBay Deluxe" style="height:50px"></a>
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
 
@@ -57,16 +57,16 @@
       <a class="nav-link" href="browse.php">Browse</a>
     </li>
 <?php
-  if (isset($_SESSION['account_type']) && $_SESSION['account_type'] == 'buyer') {
+  if (isset($_SESSION['account_buyer']) && $_SESSION['account_buyer'] == True) {
   echo('
 	<li class="nav-item mx-1">
-      <a class="nav-link" href="mybids.php">My Bids</a>
+      <a class="nav-link" href="recommendations.php">Recommended</a>
     </li>
 	<li class="nav-item mx-1">
-      <a class="nav-link" href="recommendations.php">Recommended</a>
+      <a class="nav-link" href="mybids.php">My Bids</a>
     </li>');
   }
-  if (isset($_SESSION['account_type']) && $_SESSION['account_type'] == 'seller') {
+  if (isset($_SESSION['account_seller']) && $_SESSION['account_seller'] == True) {
   echo('
 	<li class="nav-item mx-1">
       <a class="nav-link" href="mylistings.php">My Listings</a>
