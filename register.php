@@ -4,30 +4,26 @@
 
 <h2 class="my-3">Register new account</h2>
 
-<!-- Alert that shows up if there are errors with registration -->
+<!-- Alert that shows up if there is an error with registration -->
 <?php
-if (isset($_SESSION['error'])){
-  echo "<div class='alert alert-warning col-sm-12'><div class='card-body'><ul style='margin-bottom: 0px;'>";
-  foreach ($_SESSION['error'] as $error) {
-    echo "<li><span class='text-danger'> <b>Error:</b> " . $error . "</span></li>";
-  }
-  echo "</ul></div></div>";
-  // clear all errors afterwards
-  unset($_SESSION['error']);
+if (isset($_GET['error']) == 1){
+  echo "<div class='alert alert-warning col-sm-12 text-center'><div class='card-body'>";
+  echo "<span class='text-danger' id='myPopup'> <b>Error:</b> " . $_GET['error'] . "</span>";
+  echo "</div></div>";
 }
 ?>
 
 <!-- Create auction form -->
 <form method="POST" action="process_registration.php">
   <div class="form-group row">
-    <label class="col-sm-2 col-form-label text-right">Registering as a:</label>
+    <label for="accountType" class="col-sm-2 col-form-label text-right">Registering as a:</label>
     <div class="col-sm-9" style="padding-top: 10px">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="accountBuyer" id="accountBuyer" value="1" checked>
+        <input class="form-check-input" type="radio" name="accountType" id="accountBuyer" value="buyer" checked>
         <label class="form-check-label" for="accountBuyer">Buyer</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="accountSeller" id="accountSeller" value="1">
+        <input class="form-check-input" type="radio" name="accountType" id="accountSeller" value="seller">
         <label class="form-check-label" for="accountSeller">Seller</label>
       </div>
       <small id="accountTypeHelp" class="form-text-inline text-muted"><span class="text-danger">* Required.</span></small>
@@ -112,8 +108,7 @@ if (isset($_SESSION['error'])){
   </div>
 </form>
 
-<div class="text-center" style="padding-bottom: 10px;">Already have an account? <a href="" data-toggle="modal" data-target="#loginModal">Login</a>
+<div class="text-center">Already have an account? <a href="" data-toggle="modal" data-target="#loginModal">Login</a>
 </div>
 
-</div>
 <?php include_once("footer.php")?>

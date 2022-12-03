@@ -1,16 +1,24 @@
-<?php 
+<?php
 include_once("header.php");
 require_once 'database.php';
 ?>
 
 <div class="container">
 
+<?php
+if (isset($_GET['error']) == 1){
+    echo "<div class='alert alert-warning col-sm-12 text-center'><div class='card-body'>";
+    echo "<span class='text-danger' id='myPopup'> <b>Error:</b> " . $_GET['error'] . "</span>";
+    echo "</div></div>";
+}
+?>
+
 <!-- Create auction form -->
 <div style="max-width: 800px; margin: 10px auto">
   <h2 class="my-3">Create new auction</h2>
   <div class="card">
     <div class="card-body">
-      <form method="post" action="create_auction_result.php">
+      <form method="post" action="create_auction_result.php" enctype="multipart/form-data">
         <div class="form-group row">
           <label for="auctionTitle" class="col-sm-2 col-form-label text-right">Title of auction</label>
           <div class="col-sm-10">
