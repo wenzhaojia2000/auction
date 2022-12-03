@@ -1,3 +1,5 @@
+![Logo](img/index.png)
+
 # Auction
 
 Starter code from Moodle page with an ER Diagram created in https://app.diagrams.net 
