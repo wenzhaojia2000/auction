@@ -16,8 +16,10 @@
 
   // TODO-DONE: Check user's credentials (cookie/session).
 
-if (!isset($_SESSION['username']) && $_SESSION['account_type'] != 'seller') {
+if (!isset($_SESSION['username']) && $_SESSION['account_seller'] != True) {
     return;
+} else {
+  $userID = $_SESSION['uid'];
 }
 ?>
 
@@ -34,7 +36,7 @@ if (!isset($_SESSION['username']) && $_SESSION['account_type'] != 'seller') {
 
 
     $countSql = <<<SQL
-select count(*) as cnt from "Items" 
+select count(*) as cnt from "Items" where userID = $userID
 SQL;
 
     $count_res = fetch_row($countSql);
@@ -57,12 +59,12 @@ if ($num_results==0){
     <?php
     $offset = ($curr_page - 1) * $results_per_page;
     $query_sql = <<<SQL
-select *, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items"  limit $results_per_page offset {$offset}
+select *, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items" where userID = $userID limit $results_per_page offset {$offset}
 SQL;
     $query_data = fetch_all($query_sql);
 
     foreach ($query_data as $item) {
-        print_listing_li($item['itemid'], $item['itemname'], $item['itemdescription'], $item['currentprice'], $item['bids'],
+        print_listing_li($item['itemid'], $item['itemimage'], $item['itemname'], $item['itemdescription'], $item['currentprice'], $item['bids'],
             new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate']))));
     }
     ?>

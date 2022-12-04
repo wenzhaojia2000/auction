@@ -17,14 +17,14 @@ require_once 'database.php';
 
 // LIST OF VARIABLES
 
-$itemName = $_POST['itemName'];
-$itemDescription = $_POST['itemDescription'];//option
-$auctionCategory = $_POST['category'];
-$itemCondition = $_POST['itemCondition'];
-$auctionStartPrice = $_POST['startingPrice'];
-$auctionReservePrice = $_POST['reservePrice'];
-$deliveryType = $_POST['deliveryType'];
-$auctionEndDate = $_POST['endDate'];
+$itemName = pg_escape_string($connection, $_POST['itemName']);
+$itemDescription = pg_escape_string($connection, $_POST['itemDescription']); //option
+$auctionCategory = pg_escape_string($connection, $_POST['category']);
+$itemCondition = pg_escape_string($connection, $_POST['itemCondition']);
+$auctionStartPrice = pg_escape_string($connection, $_POST['startingPrice']);
+$auctionReservePrice = pg_escape_string($connection, $_POST['reservePrice']);
+$deliveryType = pg_escape_string($connection, $_POST['deliveryType']);
+$auctionEndDate = pg_escape_string($connection, $_POST['endDate']);
 
 // entries are correctly entered (entries are not null)
 
@@ -106,10 +106,11 @@ foreach($_FILES["itemImage"]["tmp_name"] as $key=>$tmp_name) {
 /* TODO-DONE #3: If everything looks good, make the appropriate call to insert
             data into the database. */
 
-if ($deliveryType == 'none' || $deliveryType == 'free') {
+if ($deliveryType == 'none' ) {
+    $deliveryPrice = NULL;
+} else if ($deliveryType == 'free') {
     $deliveryPrice = 0;
 } else {
-    //todo set a default price
     $deliveryPrice = 10;
 }
 

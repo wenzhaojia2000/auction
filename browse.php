@@ -121,7 +121,7 @@ include "database.php"?>
     }
 
     if ($ordering == 'date') {
-        $orderBy = ' order by enddate desc';
+        $orderBy = ' order by enddate asc';
     }
 
     $countSql = <<<SQL
@@ -141,7 +141,7 @@ SQL;
 <!-- TODO-DONE: If result set is empty, print an informative message. Otherwise... -->
 <?php
 if ($num_results==0){
-  echo 'No results matched your query';
+  echo 'No results matched your query.';
 }
 ?>
 

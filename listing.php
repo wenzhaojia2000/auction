@@ -8,14 +8,22 @@
   // Get info from the URL:
   $item_id = $_GET['item_id'];
 
-  // TODO: Use item_id to make a query to the database.
+  // TODO-DONE: Use item_id to make a query to the database.
     $sql = <<<SQL
 select *,(select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items" where itemid = {$item_id}
 SQL;
     $item = fetch_row($sql);
 
-  $title = $item['itemname'];
-  $description = $item['itemdescription'];
+  // item doesn't exist or has been deleted
+  if (!$item){
+    echo "<div class='alert alert-warning col-sm-12'><div class='card-body'>";
+    echo "<span class='text-danger'> <b>Error 404:</b> Item not found, or has been deleted.</span>";
+    echo "</div></div>";
+    exit();
+  }
+
+  $title = trim($item['itemname']);
+  $description = trim($item['itemdescription']);
   $current_price = $item['currentprice'];
   $num_bids = $item['bids'];
   $end_time = new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate'])));
@@ -80,9 +88,7 @@ SQL;
 <div class="row"> <!-- Row #2 with auction description + bidding info -->
   <div class="col-sm-8"> <!-- Left col with item info -->
 
-    <div class="itemDescription">
-    <?php echo($description); ?>
-    </div>
+    <div class="itemDescription" style="white-space: pre-wrap;"><?php echo($description); ?></div>
 
   </div>
 
