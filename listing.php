@@ -22,8 +22,17 @@ SQL;
     exit();
   }
 
+  // select seller 
+  $sql = <<<SQL
+    select username from "User" where userID = (select userID from "Items" where itemid = {$item_id})
+  SQL;
+    $seller = fetch_row($sql)['username'];
+
   $title = trim($item['itemname']);
   $description = trim($item['itemdescription']);
+  $image = $item['itemimage'];
+  $condition = $item['itemcondition'];
+  $delivery_price = $item['deliveryprice'];
   $current_price = $item['currentprice'];
   $num_bids = $item['bids'];
   $end_time = new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate'])));
@@ -87,19 +96,37 @@ SQL;
 
 <div class="row"> <!-- Row #2 with auction description + bidding info -->
   <div class="col-sm-8"> <!-- Left col with item info -->
-
+    <!-- print author of item --->
+    <div class="itemSeller"> Seller: <b> <?php echo($seller); ?></b></div><br>
     <div class="itemDescription" style="white-space: pre-wrap;"><?php echo($description); ?></div>
 
   </div>
 
   <div class="col-sm-4"> <!-- Right col with bidding info -->
+    <div class="itemImage">
+      <img src="images/<?php echo($image) ?>" style="max-width:100%; max-height:600px; padding-bottom:10px;">
+    </div>
+    <ul><li>
+      Condition: <b><?php echo(ucwords($condition));?></b>
+    </li><li>
+      <?php
+        if (is_null($delivery_price)) {
+          echo "<span style='color:grey'><i>No delivery</i></span>";
+        } else if ($delivery_price == 0) {
+          echo "<span style='color:green'><b>Free delivery</b></span>";
+        } else {
+          echo "Delivery: <b>£" . $delivery_price . "</b>";
+        }
+      ?>
+    </li><li>
+      <?php if ($now > $end_time): ?>
+      <span style="color:red">This auction ended <b><?php echo(date_format($end_time, 'j M H:i')) ?></b></span>
+      <!-- TODO: Print the result of the auction here? -->
+      <?php else: ?>
+      Auction ends <b><?php echo(date_format($end_time, 'j M H:i') . $time_remaining) ?></b>
+  </li></ul>
+    
 
-    <p>
-<?php if ($now > $end_time): ?>
-     This auction ended <?php echo(date_format($end_time, 'j M H:i')) ?>
-     <!-- TODO: Print the result of the auction here? -->
-<?php else: ?>
-     Auction ends <?php echo(date_format($end_time, 'j M H:i') . $time_remaining) ?></p>
     <p class="lead">Current bid: £<?php echo(number_format($current_price, 2)) ?></p>
 
     <!-- Bidding form -->
