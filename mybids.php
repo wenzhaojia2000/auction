@@ -17,8 +17,11 @@
   // TODO-DONE: Check user's credentials (cookie/session).
 
 if (!$_SESSION['username'] || $_SESSION['account_buyer'] != True) {
-    echo "<div>You do not have permission</div>";
+    echo "<div class='alert alert-warning col-sm-12'><div class='card-body'>";
+    echo "<span class='text-danger'> <b>Error 403:</b> You do not have permission to view this page.</span>";
+    echo "</div></div>";
     header("refresh:2;url=browse.php");
+    exit();
 }
 
   // TODO-DONE: Perform a query to pull up the auctions they've bidded on.
@@ -75,7 +78,12 @@ SQL;
             $query_data = fetch_all($query_sql);
 
             foreach ($query_data as $item) {
-                print_listing_li($item['itemid'], $item['itemimage'], $item['itemname'], $item['itemdescription'], $item['bid_price'], $item['bids'],
+                $query = <<<SQL
+                SELECT itemimage from "Image" where itemid = {$item['itemid']}
+                SQL;
+                // just need one image
+                $image = fetch_row($query)['itemimage'];
+                print_listing_li($item['itemid'], $image, $item['itemname'], $item['itemdescription'], $item['bid_price'], $item['bids'],
                     new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate']))));
             }
             ?>

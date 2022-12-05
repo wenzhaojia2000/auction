@@ -3,15 +3,20 @@ include_once("header.php");
 require_once 'database.php';
 ?>
 
-<div class="container">
-
+<!-- Alert that shows up if there are errors with creating an auction -->
 <?php
-if (isset($_GET['error']) == 1){
-    echo "<div class='alert alert-warning col-sm-12 text-center'><div class='card-body'>";
-    echo "<span class='text-danger' id='myPopup'> <b>Error:</b> " . $_GET['error'] . "</span>";
-    echo "</div></div>";
+if (isset($_SESSION['error'])){
+  echo "<div class='alert alert-warning col-sm-12'><div class='card-body'><ul style='margin-bottom: 0px;'>";
+  foreach ($_SESSION['error'] as $error) {
+    echo "<li><span class='text-danger'> <b>Error:</b> " . $error . "</span></li>";
+  }
+  echo "</ul></div></div>";
+  // clear all errors afterwards
+  unset($_SESSION['error']);
 }
 ?>
+
+<div class="container">
 
 <!-- Create auction form -->
 <div style="max-width: 800px; margin: 10px auto">
@@ -78,7 +83,7 @@ if (isset($_GET['error']) == 1){
               <div class="input-group-prepend">
                 <span class="input-group-text">£</span>
               </div>
-              <input type="number" class="form-control" id="auctionStartPrice" name="startingPrice">
+              <input type="number" step=".01" class="form-control" id="auctionStartPrice" name="startingPrice">
             </div>
             <small id="startBidHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Initial bid amount.</small>
           </div>
@@ -90,7 +95,7 @@ if (isset($_GET['error']) == 1){
               <div class="input-group-prepend">
                 <span class="input-group-text">£</span>
               </div>
-              <input type="number" class="form-control" id="auctionReservePrice" name="reservePrice">
+              <input type="number" step=".01" class="form-control" id="auctionReservePrice" name="reservePrice">
             </div>
             <small id="reservePriceHelp" class="form-text text-muted">Optional. Auctions that end below this price will not go through. This value is not displayed in the auction listing.</small>
           </div>

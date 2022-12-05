@@ -1,9 +1,5 @@
 <?php include_once("header.php")?>
 
-<div class="container">
-
-<h2 class="my-3">Register new account</h2>
-
 <!-- Alert that shows up if there are errors with registration -->
 <?php
 if (isset($_SESSION['error'])){
@@ -16,6 +12,10 @@ if (isset($_SESSION['error'])){
   unset($_SESSION['error']);
 }
 ?>
+
+<div class="container">
+
+<h2 class="my-3">Register new account</h2>
 
 <!-- Create auction form -->
 <form method="POST" action="process_registration.php">

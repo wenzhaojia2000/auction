@@ -35,7 +35,7 @@ $passhash = $userData['password'];
 $verify = password_verify($password, $passhash);
 
 if (!$userData or !$verify) {
-    $error = "Please enter a valid account";
+    $error = "Email or password is incorrect";
     echo "<script>alert('{$error}');history.go(-1);</script>";
     exit();
 }

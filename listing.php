@@ -6,11 +6,11 @@
 
 <?php
   // Get info from the URL:
-  $item_id = $_GET['item_id'];
+  $itemID = $_GET['item_id'];
 
   // TODO-DONE: Use item_id to make a query to the database.
     $sql = <<<SQL
-select *,(select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items" where itemid = {$item_id}
+select *,(select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items" where itemid = {$itemID}
 SQL;
     $item = fetch_row($sql);
 
@@ -24,13 +24,18 @@ SQL;
 
   // select seller 
   $sql = <<<SQL
-    select username from "User" where userID = (select userID from "Items" where itemid = {$item_id})
+    select username from "User" where userID = (select userID from "Items" where itemid = {$itemID})
   SQL;
     $seller = fetch_row($sql)['username'];
 
+  // get images
+  $sql = <<<SQL
+    select itemimage from "Image" where itemID = $itemID
+  SQL;
+  $image = fetch_all($sql);
+
   $title = trim($item['itemname']);
   $description = trim($item['itemdescription']);
-  $image = $item['itemimage'];
   $condition = $item['itemcondition'];
   $delivery_price = $item['deliveryprice'];
   $current_price = $item['currentprice'];
@@ -54,7 +59,7 @@ SQL;
   //       For now, this is hardcoded.
     if (isset($_SESSION['uid'])) {
         $sql = <<<SQL
-    select * from "Watches" where userid = {$_SESSION['uid']} and itemid = {$item_id}
+    select * from "Watches" where userid = {$_SESSION['uid']} and itemid = {$itemID}
 SQL;
     $res = fetch_row($sql);
         if ($res) {
@@ -103,9 +108,32 @@ SQL;
   </div>
 
   <div class="col-sm-4"> <!-- Right col with bidding info -->
-    <div class="itemImage">
-      <img src="images/<?php echo($image) ?>" style="max-width:100%; max-height:600px; padding-bottom:10px;">
+    <!-- Image gallery -->
+    <div id="itemImage" class="carousel slide" style="width:350px; height:400px;" data-ride="carousel">
+      <div class="carousel-inner" style="width:100%; height:100%">
+        <?php
+        if (count($image) == 0){
+          echo '<div class="carousel-item active" style="max-width:350px; max-height:400px"><img class="d-block" style="max-width:350px; max-height:400px;" src="images/noimage.png"></div>';
+        } else {
+          $first_image = array_slice($image, 0);
+          $rest_image = array_slice($image, 1, count($image));
+          echo '<div class="carousel-item active" style="max-width:350px; max-height:400px"><img class="d-block" style="max-width:350px; max-height:400px;" src="images/'. $first_image[0]['itemimage'] .'"></div>';
+          foreach($rest_image as $i) {
+            echo '<div class="carousel-item" style="max-width:350px; max-height:400px"><img class="d-block" style="max-width:350px; max-height:400px;" src="images/'. $i['itemimage'] .'"></div>';
+          }
+        }
+        ?>
+      </div>
+      <a class="carousel-control-prev" href="#itemImage" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#itemImage" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
+    <br>
     <ul><li>
       Condition: <b><?php echo(ucwords($condition));?></b>
     </li><li>
@@ -136,7 +164,7 @@ SQL;
           <span class="input-group-text">£</span>
         </div>
 	    <input type="number" class="form-control" id="bid" name="bid">
-	    <input type="hidden" class="form-control" id="itemid" name="itemid" value="<?php echo $item_id ?>">
+	    <input type="hidden" class="form-control" id="itemid" name="itemid" value="<?php echo $itemID ?>">
       </div>
       <button type="submit" class="btn btn-primary form-control">Place bid</button>
     </form>
@@ -162,7 +190,7 @@ function addToWatchlist(button) {
   // Sends item ID as an argument to that function.
   $.ajax('watchlist_funcs.php', {
     type: "POST",
-    data: {functionname: 'add_to_watchlist', arguments: [<?php echo($item_id);?>]},
+    data: {functionname: 'add_to_watchlist', arguments: [<?php echo($itemID);?>]},
 
     success:
       function (obj, textstatus) {
@@ -195,7 +223,7 @@ function removeFromWatchlist(button) {
   // Sends item ID as an argument to that function.
   $.ajax('watchlist_funcs.php', {
     type: "POST",
-    data: {functionname: 'remove_from_watchlist', arguments: [<?php echo($item_id);?>]},
+    data: {functionname: 'remove_from_watchlist', arguments: [<?php echo($itemID);?>]},
 
     success:
       function (obj, textstatus) {

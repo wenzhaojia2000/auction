@@ -10,7 +10,7 @@ To edit the ER diagram, go to `File` > `Open from` > `Device` > Find .drawio fil
 
 ## Running WAMP with PostgreSQL
 
-1. Install [Wampserver](https://www.wampserver.com/en/)
+1. Install [Wampserver](https://www.wampserver.com/en/) (you need Windows...)
 2. Install [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) **version 14.5** (this is *not the latest release*!)
 3. Download [phpPgAdmin](https://github.com/phppgadmin/phppgadmin/releases/tag/REL_7-13-0)
 4. Extract `phpPgAdmin-7.13.0.zip` in `C:\wamp64\apps`, so the path will be `C:\wamp\apps\phpPgAdmin-7.13.0`. (If you installed Wamp somewhere else, correct the file paths.)
@@ -43,9 +43,21 @@ but it might be different if you chose a different password during PostgreSQL in
 
 Edited from https://stackoverflow.com/questions/14621181/integration-of-postgresql-on-wamp
 
-## Running the auction site
+## Setup
 
 1. Go to `C:\wamp64\www`
 2. Clone this github repository into a new folder. If you have git bash you can use `cd C:\wamp64\www` and `git clone https://github.com/wenzhaojia2000/auction.git auction`
+
+In the `Build Database` directory, run the following scripts in postgresql in order:
+
+1. `create_database.pgsql`
+2. `create_admin.pgsql` (**Recommended to change the password in this file to something else!**)
+3. `create_tables.pgsql`
+4. `insert_values_to_category.pgsql`
+5. `insert_mock_data_users.pgsql`
+6. `insert_mock_data_items.pgsql`
+
+Then, create a file named `adminpassword.txt` in the root folder consisting of the password you created in `create_admin.pgsql`. (This file is ignored by `.gitignore`.)
+
 3. Run Wampserver if you haven't already
 4. Go to http://localhost/auction/index.php

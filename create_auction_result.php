@@ -1,12 +1,12 @@
-<?php include_once("header.php")?>
-
-<div class="container my-5">
-
 <?php
 
-//establish the connection with the PostgreSQL database */
-
+require_once 'utilities.php';
+// establish the connection with the PostgreSQL database
 require_once 'database.php';
+
+session_start();
+$userID = $_SESSION['uid'];
+$_SESSION['error'] = array();
 
 /* TODO-DONE #2: Extract form data into variables. Because the form was a 'post'
             form, its data can be accessed via $POST['auctionTitle'],
@@ -18,7 +18,7 @@ require_once 'database.php';
 // LIST OF VARIABLES
 
 $itemName = pg_escape_string($connection, $_POST['itemName']);
-$itemDescription = pg_escape_string($connection, $_POST['itemDescription']); //option
+$itemDescription = pg_escape_string($connection, $_POST['itemDescription']); // optional
 $auctionCategory = pg_escape_string($connection, $_POST['category']);
 $itemCondition = pg_escape_string($connection, $_POST['itemCondition']);
 $auctionStartPrice = pg_escape_string($connection, $_POST['startingPrice']);
@@ -29,78 +29,93 @@ $auctionEndDate = pg_escape_string($connection, $_POST['endDate']);
 // entries are correctly entered (entries are not null)
 
 if(empty($itemName) == 1){
-    $error = "Please enter a valid itemName";
-    header('Location: create_auction.php?error=' . urlencode($error));
-    exit();
+    $_SESSION['error'][] = "Please enter a valid auction title";
 }
 
-if(empty($auctionCategory) == 1){
-    $error = "Please enter a valid category";
-    header('Location: create_auction.php?error=' . urlencode($error));
-    exit();
+// check category exists
+$sql = <<<SQL
+select * from "Category" where categoryname = '$auctionCategory'
+SQL;
+$res = fetch_row($sql);
+
+if(!$res){
+    $_SESSION['error'][] =  "Please enter a valid category";
 }
 
-if(empty($itemCondition) == 1){
-    $error = "Please enter a valid itemCondition";
-    header('Location: create_auction.php?error=' . urlencode($error));
-    exit();
+if(!in_array($itemCondition, array('new', 'used', 'broken'))){
+    $_SESSION['error'][] =  "Please enter a valid item condition";
 }
 
 if(empty($auctionStartPrice) == 1){
-    $error = "Please enter a valid reservePrice";
-    header('Location: create_auction.php?error=' . urlencode($error));
-    exit();
+    $_SESSION['error'][] =  "Please enter a valid start price";
 }
 
-if(empty($deliveryType) == 1){
-    $error = "Please enter a valid deliveryType";
-    header('Location: create_auction.php?error=' . urlencode($error));
-    exit();
+if(!in_array($deliveryType, array('none', 'paid', 'free'))){
+    $_SESSION['error'][] =  "Please enter a valid delivery type";
+}
+
+if(empty($auctionEndDate) == 1){
+    $_SESSION['error'][] =  "Please enter a valid end date";
 }
 
 if(empty($auctionReservePrice) == 1){
     $auctionReservePrice = $auctionStartPrice;
+} else if ($auctionReservePrice < $auctionStartPrice) {
+    $_SESSION['error'][] = "Reserve price should be at least the start price";
 }
 
-$txtGalleryName = date('Ymd');
-
+// if there are errors, return user to create_auction.php and stop code below from executing
+if ($_SESSION['error']) {
+    header('Location: create_auction.php');
+    exit();
+}
 
 // Uploads files locally to a directory "images/". Doesn't add to database yet.
-// From https://stackoverflow.com/questions/24895170/multiple-image-upload-php-form-with-one-input
-$error=array();
-$extension=array("jpeg","jpg","png","gif");
-
+// based from https://stackoverflow.com/questions/24895170/multiple-image-upload-php-form-with-one-input
+$txtGalleryName = 'images/';
+$extension = array("jpeg","jpg","png","gif");
 $fileArr = [];
 
-foreach($_FILES["itemImage"]["tmp_name"] as $key=>$tmp_name) {
-      $file_name=$_FILES["itemImage"]["name"][$key];
-      $file_tmp=$_FILES["itemImage"]["tmp_name"][$key];
-      $ext=pathinfo($file_name,PATHINFO_EXTENSION);
+foreach($_FILES["itemImage"]["tmp_name"] as $key => $tmp_name) {
+    $file_name = $_FILES["itemImage"]["name"][$key];
+    $file_tmp = $_FILES["itemImage"]["tmp_name"][$key];
+    $error = $_FILES["itemImage"]["error"][$key];
+    $ext = pathinfo($file_name, PATHINFO_EXTENSION);
 
-      $cDir = "images/".$txtGalleryName;
-      if (! is_dir ( $cDir )) {
-          mkdir($cDir, '0777', true);
-      }
+    // Error 4 is UPLOAD_ERR_NO_FILE (no file was uploaded)
+    if ($error == 4) {
+        $fileArr[] = NULL;
+    // Error 0 is UPLOAD_ERR_OK (file uploaded fine)
+    } else if ($error == 0) {
+        if (! is_dir ( $txtGalleryName )) {
+            mkdir($txtGalleryName, '0777', true);
+        }
+        
+        // hash file name
+        $file_name = md5($file_name . $userID) . '.' . $ext;
 
-      $fileName = explode('.', $file_name)[0];
+        if (in_array($ext, $extension)) {
+            if (!file_exists($txtGalleryName . "/" . $file_name)) {
+                move_uploaded_file($file_tmp = $_FILES["itemImage"]["tmp_name"][$key], $txtGalleryName . "/" . $file_name);
+                $fileArr[] = $file_name;
+            } else {
+                $filename = basename($file_name, $ext);
+                $newFileName = $filename.time() . "." . $ext;
+                move_uploaded_file($file_tmp = $_FILES["itemImage"]["tmp_name"][$key], $txtGalleryName . "/" . $newFileName);
+                $fileArr[] = $newFileName;
+            }
+        } else {
+            $_SESSION['error'][] = "Invalid file format";
+        }
+    } else {
+        $_SESSION['error'][] = "Something went wrong with file upload (error " . $error . ")";
+    }
+}
 
-      $file_name = md5($fileName.$_SESSION['uid']) . '.' . $ext;
-
-      if(in_array($ext, $extension)) {
-         if(!file_exists("images/".$txtGalleryName."/".$file_name)) {
-            move_uploaded_file($file_tmp=$_FILES["itemImage"]["tmp_name"][$key],"images/".$txtGalleryName."/".$file_name);
-            $fileArr[] = $file_name;
-         }
-         else {
-            $filename=basename($file_name,$ext);
-            $newFileName=$filename.time().".".$ext;
-            move_uploaded_file($file_tmp=$_FILES["itemImage"]["tmp_name"][$key],"images/".$txtGalleryName."/".$newFileName);
-            $fileArr[] = $newFileName;
-         }
-      }
-      else {
-         array_push($error,"$file_name, ");
-      }
+// do this again after file upload
+if ($_SESSION['error']) {
+    header('Location: create_auction.php');
+    exit();
 }
 
 /* TODO-DONE #3: If everything looks good, make the appropriate call to insert
@@ -114,12 +129,10 @@ if ($deliveryType == 'none' ) {
     $deliveryPrice = 10;
 }
 
-
 $r = pg_insert($connection, 'Items', [
     'userid' => $_SESSION['uid'],
     'itemname' => $itemName,
     'categoryname' => $auctionCategory,
-    'itemimage' => "images/".$txtGalleryName."/".implode(',', $fileArr),
     'itemdescription' => $itemDescription,
     'itemcondition' => $itemCondition,
     'reservationprice' => $auctionReservePrice,
@@ -131,20 +144,26 @@ $r = pg_insert($connection, 'Items', [
 ]);
 
 $sql = <<<SQL
-select itemid from "Items" where userid = '{$_SESSION['uid']}' order by itemid desc limit 1
+select itemid from "Items" where userid = $userID order by itemid desc limit 1
 SQL;
 $res = fetch_row($sql);
 
-$itemId = $res['itemid'];
+// why php
+global $itemID;
+$itemID = $res['itemid'];
+
+// insert images in the Image table
+foreach ($fileArr as $image) {
+    if (!is_null($image)) {
+        pg_insert($connection, 'Image', [
+            'itemid' => $itemID,
+            'itemimage' => $image
+        ]);
+    }
+}
 
 # TODO-DONE
 // If all is successful, let user know.
-echo('<div class="text-center">Auction successfully created! <a href="listing.php?item_id='.$itemId.'">View your new listing.</a></div>');
+echo('<div class="text-center">Auction successfully created! <a href="listing.php?item_id='.$itemID.'">View your new listing.</a></div>');
 
 ?>
-
-
-</div>
-
-
-<?php include_once("footer.php")?>

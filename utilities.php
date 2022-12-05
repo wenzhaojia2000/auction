@@ -23,6 +23,26 @@ function display_time_remaining($interval) {
 
 }
 
+function fetch_row($sql = '')
+{
+    global $connection;
+    $stmt = pg_query($connection, $sql);
+    return @pg_fetch_assoc($stmt, 0);
+}
+
+function fetch_all($sql = '')
+{
+    global $connection;
+    $stmt = pg_query($connection, $sql);
+
+    $out = [];
+    while ($r = pg_fetch_assoc($stmt)) {
+        $out[] = $r;
+    }
+
+    return $out;
+}
+
 // print_listing_li:
 // This function prints an HTML <li> element containing an auction listing
 function print_listing_li($item_id, $image, $title, $desc, $price, $num_bids, $end_time)
