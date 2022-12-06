@@ -34,6 +34,11 @@ CREATE TABLE "Items" (
     deliveryPrice NUMERIC(17, 2)
 );
 
+CREATE TABLE "Sold" (
+    userID INT REFERENCES "User"(userID),
+    itemID INT REFERENCES "Items"(itemID)
+);
+
 CREATE TABLE "Image" (
     itemID INT REFERENCES "Items"(itemID),
     itemImage VARCHAR(500)

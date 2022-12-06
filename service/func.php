@@ -27,7 +27,7 @@ SQL;
             $user = $item['email'];
             $bid_user = $bid_res['email'];
 
-            pg_insert($connection, 'Sells', [
+            pg_insert($connection, 'Sold', [
                 'itemid' => $item['itemid'],
                 'userid' => $bid_res['userid']
             ]);

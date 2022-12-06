@@ -4,6 +4,19 @@
 <?php require("database.php")?>
 <?php require("utilities.php")?>
 
+<!-- Alert that shows up if there are errors with placing a bid -->
+<?php
+if (isset($_SESSION['error'])){
+  echo "<div class='alert alert-warning col-sm-12'><div class='card-body'><ul style='margin-bottom: 0px;'>";
+  foreach ($_SESSION['error'] as $error) {
+    echo "<li><span class='text-danger'> <b>Error:</b> " . $error . "</span></li>";
+  }
+  echo "</ul></div></div>";
+  // clear all errors afterwards
+  unset($_SESSION['error']);
+}
+?>
+
 <?php
   // Get info from the URL:
   $itemID = $_GET['item_id'];
@@ -124,14 +137,18 @@ SQL;
         }
         ?>
       </div>
-      <a class="carousel-control-prev" href="#itemImage" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#itemImage" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+      <?php
+        if (count($image) > 1){
+          echo '<a class="carousel-control-prev" href="#itemImage" role="button" data-slide="prev">';
+          echo '  <span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+          echo '  <span class="sr-only">Previous</span>';
+          echo '</a>';
+          echo '<a class="carousel-control-next" href="#itemImage" role="button" data-slide="next">';
+          echo '  <span class="carousel-control-next-icon" aria-hidden="true"></span>';
+          echo '  <span class="sr-only">Next</span>';
+          echo '</a>';
+        }
+      ?>
     </div>
     <br>
     <ul><li>
@@ -163,7 +180,7 @@ SQL;
         <div class="input-group-prepend">
           <span class="input-group-text">£</span>
         </div>
-	    <input type="number" class="form-control" id="bid" name="bid">
+	    <input type="number" step=".01" class="form-control" id="bid" name="bid">
 	    <input type="hidden" class="form-control" id="itemid" name="itemid" value="<?php echo $itemID ?>">
       </div>
       <button type="submit" class="btn btn-primary form-control">Place bid</button>
