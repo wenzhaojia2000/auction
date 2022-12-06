@@ -33,7 +33,6 @@ SQL;
                 'userid' => $bid_res['userid']
             ]);
 
-
             postmail($user, 'Auction Message' , 'Your item has been auctioned out, ItemId is ' . $item['itemid']);
 
             postmail($bid_user, 'Auction Message' , 'Bid Success, ItemId is ' . $item['itemid']);

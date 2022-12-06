@@ -52,7 +52,6 @@ if (isset($_SESSION['error'])){
                     echo "<option value='$categoryName'> $categoryName </option>";
                   }
                 ?>
-                // the loop ends here
             </select>
             <small id="categoryHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Select a category for this item.</small>
           </div>

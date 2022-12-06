@@ -1,8 +1,16 @@
 <?php
 
-$adminpw = fopen("adminpassword.txt", "r") or die("Unable to open file containing admin password.");
-$password = fread($adminpw, filesize("adminpassword.txt"));
-fclose($adminpw);
+if (file_exists("adminpassword.txt")) {
+	$adminpw = fopen("adminpassword.txt", "r");
+	$password = fread($adminpw, filesize("adminpassword.txt"));
+	fclose($adminpw);
+} else if (file_exists("../adminpassword.txt")) {
+	$adminpw = fopen("../adminpassword.txt", "r");
+	$password = fread($adminpw, filesize("../adminpassword.txt"));
+	fclose($adminpw);
+} else {
+	die("Cannot open file containing admin password");
+}
 
 global $connection;
 
