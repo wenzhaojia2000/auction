@@ -1,6 +1,6 @@
 <?php
 require_once 'database.php';
-require_once 'utilities.php'
+require_once 'utilities.php';
 
 // TODO-DONE: Extract $_POST variables, check they're OK, and attempt to login.
 // Notify user of success/failure and redirect/give navigation options.
