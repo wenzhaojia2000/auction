@@ -92,8 +92,8 @@
       <div class="modal-body">
         <form method="POST" action="login_result.php">
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" placeholder="Email" name="email">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Username" name="username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>

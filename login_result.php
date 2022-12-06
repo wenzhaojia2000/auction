@@ -12,11 +12,11 @@ if (isset($_SESSION['username'])) {
     header('Location:index.php');
 }
 
-$email = pg_escape_string($connection, $_POST['email']);
+$username = pg_escape_string($connection, $_POST['username']);
 $password = pg_escape_string($connection, $_POST['password']);
 
-if (empty($email)) {
-    $error = "Please enter a valid email";
+if (empty($username)) {
+    $error = "Please enter a valid username";
     echo "<script>alert('{$error}');history.go(-1);</script>";
     exit();
 }
@@ -28,7 +28,7 @@ if (empty($password)) {
 }
 
 $check_sql = <<<SQL
-select userid, username, password from "User" where email = '$email'
+select userid, username, password from "User" where username = '$username'
 SQL;
 
 $userData = fetch_row($check_sql);
