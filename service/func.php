@@ -1,7 +1,8 @@
 <?php
 
     require_once dirname(dirname(__FILE__)) . '../database.php';
-
+    require_once dirname(dirname(__FILE__)) . '../utilities.php';
+    
     function refreshAllBid()
     {
         global $connection;
@@ -11,7 +12,7 @@
 select "User".email,"Items".* from "Items" 
 inner join "User" on "Items".userid = "User".userid
 where enddate < '{$now}' and itemid not in (
-select itemid from "Sells"
+select itemid from "Sold"
 ) and currentprice > 0 and reservationprice <= currentprice
 SQL;
         $res = fetch_all($sql);
