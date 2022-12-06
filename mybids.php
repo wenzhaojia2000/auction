@@ -82,8 +82,11 @@ SQL;
                 SELECT itemimage from "Image" where itemid = {$item['itemid']}
                 SQL;
                 // just need one image
-                $image = fetch_row($query)['itemimage'];
-                print_listing_li($item['itemid'], $image, $item['itemname'], $item['itemdescription'], $item['bid_price'], $item['bids'],
+                $image = fetch_row($query);
+                if (!$image) {
+                    $image['itemimage'] = "system/noimage.png";
+                }
+                print_listing_li($item['itemid'], $image['itemimage'], $item['itemname'], $item['itemdescription'], $item['bid_price'], $item['bids'],
                     new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate']))));
             }
             ?>

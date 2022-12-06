@@ -11,7 +11,7 @@
 
 <div class="container">
   <h2 class="my-3 text-center">Welcome to</h2>
-  <img src="images/index.png" alt="eBay Deluxe" style="max-width: 100%">
+  <img src="images/system/index.png" alt="eBay Deluxe" style="max-width: 100%">
   <h2 class="my-3 text-center">Created by</h2>
   <h5 class="text-center">Yi Gu</h5>
   <h5 class="text-center">Cameron Millen</h5>

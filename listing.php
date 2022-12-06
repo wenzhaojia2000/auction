@@ -126,7 +126,7 @@ SQL;
       <div class="carousel-inner" style="width:100%; height:100%">
         <?php
         if (count($image) == 0){
-          echo '<div class="carousel-item active" style="max-width:350px; max-height:400px"><img class="d-block" style="max-width:350px; max-height:400px;" src="images/noimage.png"></div>';
+          echo '<div class="carousel-item active" style="max-width:350px; max-height:400px"><img class="d-block" style="max-width:350px; max-height:400px;" src="images/system/noimage.png"></div>';
         } else {
           $first_image = array_slice($image, 0);
           $rest_image = array_slice($image, 1, count($image));

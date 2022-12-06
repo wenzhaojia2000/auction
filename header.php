@@ -31,7 +31,7 @@
 
 <!-- Navbars -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.php"><img src="images/banner.png" alt="eBay Deluxe" style="height:50px"></a>
+  <a class="navbar-brand" href="index.php"><img src="images/system/banner.png" alt="eBay Deluxe" style="height:50px"></a>
   <ul class="navbar-nav ml-auto">
 
 <?php

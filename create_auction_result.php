@@ -56,6 +56,8 @@ if(!in_array($deliveryType, array('none', 'paid', 'free'))){
 
 if(empty($auctionEndDate) == 1){
     $_SESSION['error'][] =  "Please enter a valid end date";
+} else if (strtotime($auctionEndDate) < time()) {
+    $_SESSION['error'][] =  "End date must be in the future";
 }
 
 if(empty($auctionReservePrice) == 1){
