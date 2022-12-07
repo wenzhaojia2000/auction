@@ -61,3 +61,13 @@ Then, create a file named `adminpassword.txt` in the root folder consisting of t
 
 3. Run Wampserver if you haven't already
 4. Go to http://localhost/auction/index.php
+
+### How to run a PHP script every minute
+
+1. Open `C:\wamp64\bin\php\php7.4.26\php.ini` (Or the equivalent if you installed WAMP somewhere else/use a different version of PHP)
+2. Uncomment `extension=pdo_pgsql` and `extension=pgsql` (around line ~944) by removing the semicolon
+3. Open Application Stack Builder and install PgAgent.
+4. Open PgAdmin 4 and see if there is a "PgAgent Jobs" section under "PostgreSQL 14". If not, go to Databases → postgres and right click "postgres", select "Query tool". Type "CREATE EXTENSION pgagent;" and execute. You may have to restart your computer.
+5. Right click "PgAgent Jobs" and click "Create → PgAgent job". Add a suitable name.
+6. Go to "Steps" and click "Add row" (The plus button on the right). Then "Edit row" (The pencil icon on the left). Add a suitable name. Then click "Batch" under "Type". Click the "Code" tab. Type in `"C:\wamp64\bin\php\php7.4.26\php.exe" -f C:\wamp64\www\auction\service\close_auctions.php` (change if you installed WAMP somewhere else)
+7. Go to "Schedule", add row, edit row, add a suitable name. Click the repeat button. Under "Minutes", select "Select All". Leave all the other fields blank. Save. Now PgAgent should execute `close_auctions.php` every minute.
