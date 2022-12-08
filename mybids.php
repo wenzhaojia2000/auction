@@ -45,7 +45,7 @@ select count(*) as cnt from (select distinct on ("Items".itemid) *
 from "Bid"  
 LEFT OUTER JOIN "Items"  on "Bid".itemid = "Items".itemid
 INNER JOIN "Bid" as "B" ON "B".itemid = "Items".itemid
-where "Bid".userid = 3) as sub;
+where "Bid".userid = {$_SESSION['uid']}) as sub;
 SQL;
 
     $count_res = fetch_row($countSql);
