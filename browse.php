@@ -113,11 +113,11 @@ include "database.php"?>
     }
 
     if ($ordering == 'pricelow') {
-        $orderBy = ' order by startingprice asc';
+        $orderBy = ' order by currentprice asc';
     }
 
     if ($ordering == 'pricehigh') {
-        $orderBy = ' order by startingprice desc';
+        $orderBy = ' order by currentprice desc';
     }
 
     if ($ordering == 'date') {

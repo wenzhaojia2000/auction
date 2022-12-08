@@ -41,11 +41,11 @@ if (!$_SESSION['username'] || $_SESSION['account_buyer'] != True) {
     }
 
     $countSql = <<<SQL
-select  count(*) as cnt
+select count(*) as cnt from (select distinct on ("Items".itemid) *
 from "Bid"  
 LEFT OUTER JOIN "Items"  on "Bid".itemid = "Items".itemid
 INNER JOIN "Bid" as "B" ON "B".itemid = "Items".itemid
-where "Bid".userid = {$_SESSION['uid']};
+where "Bid".userid = 3) as sub;
 SQL;
 
     $count_res = fetch_row($countSql);
@@ -69,11 +69,12 @@ SQL;
             <?php
             $offset = ($curr_page - 1) * $results_per_page;
             $query_sql = <<<SQL
-select  "B".bidprice as bid_price ,"B".userid as bid_user_id,"Items".* , (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids
+select distinct on ("Items".itemid) "B".bidprice as bid_price , "B".userid as bid_user_id, "Items".*, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids
 from "Bid"  
-LEFT OUTER JOIN "Items"  on "Bid".itemid = "Items".itemid
-INNER JOIN "Bid" as "B" ON "B".itemid = "Items".itemid
-where "Bid".userid = {$_SESSION['uid']}  limit $results_per_page offset {$offset}
+left outer join "Items"  on "Bid".itemid = "Items".itemid
+inner join "Bid" as "B" ON "B".itemid = "Items".itemid
+where "Bid".userid = {$_SESSION['uid']} order by "Items".itemid, bid_price desc limit $results_per_page offset {$offset}
+
 SQL;
             $query_data = fetch_all($query_sql);
 
