@@ -23,7 +23,7 @@ if (isset($_SESSION['error'])){
     <label class="col-sm-2 col-form-label text-right">Registering as a:</label>
     <div class="col-sm-9" style="padding-top: 10px">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="accountBuyer" id="accountBuyer" value="1" checked>
+        <input class="form-check-input" type="checkbox" name="accountBuyer" id="accountBuyer" value="1">
         <label class="form-check-label" for="accountBuyer">Buyer</label>
       </div>
       <div class="form-check form-check-inline">

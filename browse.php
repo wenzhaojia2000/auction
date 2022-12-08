@@ -105,7 +105,7 @@ include "database.php"?>
     $where = ' 1=1 ';
 
     if ($keyword) {
-        $where .= " AND itemname like '$keyword%' ";
+        $where .= " AND itemname ILIKE '%$keyword%' OR itemdescription ILIKE '%$keyword%'";
     }
 
     if ($category) {

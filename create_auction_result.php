@@ -142,7 +142,8 @@ $r = pg_insert($connection, 'Items', [
     'currentprice' => $auctionStartPrice,
     'listingdate' => date('Y-m-d H:i:s'),
     'enddate' => date('Y-m-d H:i:s', strtotime($auctionEndDate)),
-    'deliveryprice' => $deliveryPrice
+    'deliveryprice' => $deliveryPrice,
+    'hasEnded' => False
 ]);
 
 $sql = <<<SQL
