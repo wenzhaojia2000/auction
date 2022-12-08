@@ -102,7 +102,7 @@ SQL;
   if ($now < $end_time):
 ?>
     <div id="watch_nowatch" <?php if ($has_session && $watching) echo('style="display: none"');?> >
-      <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addToWatchlist()">+ Add to watchlist</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addToWatchlist()" title="Get email notfications when you are outbid">+ Add to watchlist</button>
     </div>
     <div id="watch_watching" <?php if (!$has_session || !$watching) echo('style="display: none"');?> >
       <button type="button" class="btn btn-success btn-sm" disabled>Watching</button>
