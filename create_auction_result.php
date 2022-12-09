@@ -30,6 +30,12 @@ $auctionEndDate = pg_escape_string($connection, $_POST['endDate']);
 
 if(empty($itemName) == 1){
     $_SESSION['error'][] = "Please enter a valid auction title";
+} else if (strlen($itemName) > 99) {
+    $_SESSION['error'][] = "Auction title too long. Try moving some details to the description";
+}
+
+if (strlen($itemDescription) > 5000) {
+    $_SESSION['error'][] = "Item description too long. Try shortening it";
 }
 
 // check category exists
@@ -48,6 +54,8 @@ if(!in_array($itemCondition, array('new', 'used', 'broken'))){
 
 if(empty($auctionStartPrice) == 1){
     $_SESSION['error'][] =  "Please enter a valid start price";
+} else if ($auctionStartPrice >= 1000000000000) {
+    $_SESSION['error'][] =  "Start price must be under £1,000,000,000,000";
 }
 
 if(!in_array($deliveryType, array('none', 'paid', 'free'))){
@@ -64,6 +72,8 @@ if(empty($auctionReservePrice) == 1){
     $auctionReservePrice = $auctionStartPrice;
 } else if ($auctionReservePrice < $auctionStartPrice) {
     $_SESSION['error'][] = "Reserve price should be at least the start price";
+} else if ($auctionReservePrice >= 1000000000000) {
+    $_SESSION['error'][] =  "Reserve price must be under £1,000,000,000,000";
 }
 
 // if there are errors, return user to create_auction.php and stop code below from executing

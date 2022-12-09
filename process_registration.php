@@ -31,6 +31,8 @@ if (!isset($_POST['accountBuyer']) && !isset($_POST['accountSeller'])) {
 // check entries are correctly entered (entries are not empty)
 if (empty($username) == 1) {
     $_SESSION['error'][] = "Please enter a valid username";
+} else if (strlen($username) > 32) {
+    $_SESSION['error'][] = "Username too long. Choose a shorter username";
 } else {
     // check username has not been taken 
     $query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
@@ -43,6 +45,8 @@ if (empty($username) == 1) {
 
 if (empty($email) == 1) {
     $_SESSION['error'][] = "Please enter a valid email";
+} else if (strlen($email) > 254) {
+    $_SESSION['error'][] = "Email is too long to be valid.";
 }
 
 // we just want to return one of these errors.
@@ -54,21 +58,36 @@ if (empty($password) == 1) {
 
 if (empty($firstName) == 1) {
     $_SESSION['error'][] = "Please enter a first name";
+} else if (strlen($firstName) > 99) {
+    $_SESSION['error'][] = "First name too long. Choose a shorter one";
 }
 if (empty($lastName) == 1) {
     $_SESSION['error'][] = "Please enter a last name";
+} else if (strlen($lastName) > 99) {
+    $_SESSION['error'][] = "Last name too long. Choose a shorter one";
 }
 if (empty($phoneNo) == 1) {
     $_SESSION['error'][] = "Please enter a valid phone number";
+} else if (strlen($phoneNo) > 20) {
+    $_SESSION['error'][] = "Phone number too long. Choose a shorter one";
 }
 if (empty($addressLine1) == 1) {
     $_SESSION['error'][] = "Please enter a valid address";
+} else if (strlen($addressLine1) > 50) {
+    $_SESSION['error'][] = "First address line too long. Try to shorten it";
+}
+if (strlen($addressLine2) > 50) {
+    $_SESSION['error'][] = "Second address line too long. Try to shorten it";
 }
 if (empty($city) == 1) {
     $_SESSION['error'][] = "Please enter a valid city";
+} else if (strlen($city) > 50) {
+    $_SESSION['error'][] = "City name too long. Try to shorten it";
 }
 if (empty($postcode) == 1) {
     $_SESSION['error'][] = "Please enter a valid postcode";
+} else if (strlen($postcode) > 20) {
+    $_SESSION['error'][] = "Post code is too long to be valid";
 }
 
 // if there are errors, return user to register.php and stop code below from executing

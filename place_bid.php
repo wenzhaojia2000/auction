@@ -38,6 +38,10 @@ if ($bid <= $res['currentprice']) {
     $_SESSION['error'][] = 'Bid price is too low';
 }
 
+if ($bid >= 1000000000000) {
+    $_SESSION['error'][] = 'Bid cannot exceed value of £1,000,000,000,000';
+}
+
 if ($_SESSION['error']) {
     header('Location: listing.php?item_id=' . $itemId);
     exit();
