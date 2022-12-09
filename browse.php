@@ -125,7 +125,9 @@ include "database.php"?>
     }
 
     $countSql = <<<SQL
-select count(*) as cnt from "Items" where $where
+    select count(*) as cnt from "Items" where $where and "Items".itemid not in (
+    select itemid from "Sold"
+    )
 SQL;
 
     $count_res = fetch_row($countSql);
@@ -152,7 +154,9 @@ if ($num_results==0){
     <?php
     $offset = ($curr_page - 1) * $results_per_page;
     $query_sql = <<<SQL
-select *, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items"  where $where $orderBy limit $results_per_page offset {$offset}
+    select *, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items"  where $where and "Items".itemid not in (
+    select itemid from "Sold"
+    ) $orderBy limit $results_per_page offset {$offset}
 SQL;
     $query_data = fetch_all($query_sql);
 
