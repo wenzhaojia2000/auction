@@ -1,9 +1,9 @@
 drop table "Watches";
-drop table "Sells";
+drop table "Sold";
 drop table "Bid";
 drop table "Seller";
 drop table "Buyer";
+drop table "Image";
 drop table "Items";
 drop table "Category";
 drop table "User";
-drop table "Image";
