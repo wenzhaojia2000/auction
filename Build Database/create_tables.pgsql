@@ -32,8 +32,6 @@ CREATE TABLE "Items" (
     endDate TIMESTAMP NOT NULL,
     -- null for delivery price means no delivery
     deliveryPrice NUMERIC(17, 2),
-    -- if endDate is past but hasEnded not, then email(s) should be sent, then this can be set to true
-    hasEnded BOOLEAN NOT NULL
 );
 
 CREATE TABLE "Sold" (
