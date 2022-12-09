@@ -10,8 +10,8 @@ $bid = $_POST['bid'];
 $itemId = $_POST['itemid'];
 $_SESSION['error'] = array();
 
-if (!is_numeric($bid) || $bid <= 0) {
-    $_SESSION['error'][] = 'Invalid bid price';
+if (!isset($_SESSION['uid'])) {
+    $_SESSION['error'][] = 'Must be logged in to bid';
 }
 
 // select seller 
@@ -34,7 +34,9 @@ if (date('Y-m-d H:i:s') > $res['enddate']) {
     $_SESSION['error'][] = 'This auction has ended';
 }
 
-if ($bid <= $res['currentprice']) {
+if (!is_numeric($bid) || $bid <= 0) {
+    $_SESSION['error'][] = 'Invalid bid price';
+} else if ($bid <= $res['currentprice']) {
     $_SESSION['error'][] = 'Bid price is too low';
 }
 
@@ -64,5 +66,5 @@ require_once './service/func.php';
 
 noticeToBidder($itemId);
 
-echo "<script>alert('Bid success');history.go('-1')</script>"; exit;
+echo "<script>alert('Bid success');history.go(-1)</script>"; exit();
 ?>

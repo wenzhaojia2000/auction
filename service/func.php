@@ -1,62 +1,8 @@
 <?php
-
     require_once dirname(dirname(__FILE__)) . '../database.php';
     require_once dirname(dirname(__FILE__)) . '../utilities.php';
-    
-    function refreshAllBid()
-    {
-        global $connection;
 
-        $now = date('Y-m-d H:i:s');
-        $sql = <<<SQL
-select "User".email,"Items".* from "Items" 
-inner join "User" on "Items".userid = "User".userid
-where enddate < '{$now}' and itemid not in (
-select itemid from "Sold"
-) and currentprice > 0 and reservationprice <= currentprice
-SQL;
-        $res = fetch_all($sql);
-
-        foreach ($res as $item) {
-            $bid_sql = <<<SQL
-select "User".email,"Bid".* from "Bid"
-inner join "User" on "Bid".userid = "User".userid
- where itemid = {$item['itemid']} order by bidprice desc limit 1
-SQL;
-            $bid_res = fetch_row($bid_sql);
-
-            $user = $item['email'];
-            $bid_user = $bid_res['email'];
-
-            pg_insert($connection, 'Sold', [
-                'itemid' => $item['itemid'],
-                'userid' => $bid_res['userid']
-            ]);
-
-            postmail($user, 'Auction Message' , 'Your item has been auctioned out, ItemId is ' . $item['itemid']);
-
-            postmail($bid_user, 'Auction Message' , 'Bid Success, ItemId is ' . $item['itemid']);
-
-
-        }
-    }
-
-    function noticeToBidder($itemId = 0)
-    {
-        $sql = <<<SQL
-select "User".email from "Bid"
-inner join "User" on "Bid".userid = "User".userid
- where itemid = '$itemId' order by bidid desc limit 1
-SQL;
-
-        $res = fetch_row($sql);
-
-        $lastedBidEmail = $res['email'];
-
-        postmail($lastedBidEmail, 'Auction Message', 'The price of the item you are bidding on has been updated;ItemId is ' . $itemId);
-    }
-
-    function postmail($to, $subject = '',$body = ''){
+    function postmail($to, $subject = '', $body = '') {
         error_reporting(E_ALL);
         ini_set('display_errors', true);
         $path = dirname(__FILE__);
@@ -86,10 +32,41 @@ SQL;
         $mail->MsgHTML($body);
         $address = $to;
         $mail->AddAddress($address, '');
-        if(!$mail->Send()) {
-            echo  'error info:'.$mail->ErrorInfo;exit;
+        if (!$mail->Send()) {
+            echo 'Error info:' . $mail -> ErrorInfo;
+            exit();
         } else {
-            return 'success';
+            return 'Success';
+        }
+    }
+
+    function noticeToBidder($itemId = 0) {
+        // get title of auction
+        $sql = <<<SQL
+            SELECT itemname FROM "Items" WHERE itemid = '$itemId'
+        SQL;
+        $title = fetch_row($sql)['itemname'];
+        // select the bidder that had been outbidded
+        $sql = <<<SQL
+            SELECT "User".email, "User".userid FROM "Bid"
+            INNER JOIN "User" ON "Bid".userid = "User".userid
+            WHERE itemid = '$itemId' ORDER BY bidid DESC OFFSET 1 LIMIT 1
+        SQL;
+        $res = fetch_row($sql);
+        if ($res) {
+            $lastBiduid = $res['userid'];
+            $lastBidEmail = $res['email'];
+            // check if that user is watching the item
+            $check = <<<SQL
+                SELECT * FROM "Watches" WHERE itemid = '$itemId' AND userid = '$lastBiduid'
+            SQL;
+            $check_res = fetch_row($check);
+            if ($check_res) {
+                postmail($lastBidEmail,
+                    'eBayDeluxe: Price of item "' . $title . '" updated',
+                    'Someone has outbidded you on the item you were watching. (Name: ' . $title . ', Item ID: ' . $itemId . ')'
+                );
+            }
         }
     }
 ?>
