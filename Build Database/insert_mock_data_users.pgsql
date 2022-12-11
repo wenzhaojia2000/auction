@@ -8,7 +8,7 @@ INSERT INTO "User"(userid, username, password, email, addressline1, addressline2
 , (7,'dcavolini','$2y$10$m.Y1A3WO8TYBtlZSCOGM8u7tjszcgzJ.l8acNYcYQqSDWnuEzlff.','dcavolini@tumblr.com','6 Princess Royal Terrace',NULL,'Scarborough','YO11 2SQ','6134092032','Daniela','Cavolini')
 , (8,'mluto','$2y$10$7M4B8Y35g5WPlbd7dd2vKO8xMLnhZ5aRoBCJ8zGM2W3c9fJWG5VjO','mluto@paginegialle.it','30 Kingfisher Wy','Ollerton','Newark','NG22 9DL','4161104791','Meris','Luto');
 
-ALTER SEQUENCE "User_userid_seq" RESTART WITH 9;
+ALTER SEQUENCE 'User_userid_seq' RESTART WITH 9;
 
 INSERT INTO "Buyer"(userid) VALUES (1), (3), (5), (7);
 
