@@ -5,6 +5,7 @@
 <div class="container">
 
 <h2 class="my-3">Recommendations for you</h2>
+<p><i>Recommendations are based on collaborative filtering and will appear as soon as you have bidded on an item with at least one bid</i>.</p>
 
 <?php
   // This page is for showing a buyer recommended items based on their bid 
@@ -43,29 +44,28 @@ create temporary table "similar_users" as
 select "similar".userid, count(*) rank
 from "Bid" target 
 join "Bid" as "similar" on "target".itemid = "similar".itemid and "target".userid != "similar".userid
-where "target".userid = ?
+where "target".userid = {$_SESSION['uid']}
 group by "similar".userid;
 
 create temporary table "similar_items" as
 select SUM("similar_users".rank) total_rank, "similar".itemid
 from "similar_users"
 join "Bid" as "similar" on "similar_users".userid = "similar".userid 
-left join "Bid" target on "target".userid = ? and "target".itemid = "similar".itemid
+left join "Bid" target on "target".userid = {$_SESSION['uid']} and "target".itemid = "similar".itemid
 where "target".itemid is null
 group by "similar".itemid;
 
 create temporary table "similar_items_2" as
 SELECT total_rank, "similar_items".itemId, itemName, itemDescription, endDate
 FROM "similar_items"
-JOIN "items" ON "similar_items".itemId = "items".itemId
+JOIN "Items" ON "similar_items".itemId = "Items".itemId
 order by total_rank desc;
-
 SQL;
 
 $count_res = fetch_row($countSql);
 /* For the purposes of pagination, it would also be helpful to know the
    total number of results that satisfy the above query */
-$num_results = $count_res['cnt'];
+$num_results = $count_res;
 $results_per_page = 10;
 $max_page = ceil($num_results / $results_per_page);
 ?>
@@ -93,7 +93,7 @@ GROUP BY itemId) "B2"
 ON "B1".itemId = "B2".itemId AND bidMax = bidPrice;
 
 SELECT total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
-FROM "similar_auctions_2" as "A"
+FROM "similar_items_2" as "A"
 JOIN
 "Bid_with_cnt_max" as "B"
 ON "A".itemId = "B".itemId
@@ -110,7 +110,7 @@ SQL;
             if (!$image) {
                 $image['itemimage'] = "system/noimage.png";
             }
-            print_listing_li($item['itemid'], $image['itemimage'], $item['itemname'], $item['itemdescription'], $item['bid_price'], $item['bids'],
+            print_listing_li($item['itemid'], $image['itemimage'], $item['itemname'], $item['itemdescription'], $item['bidmax'], $item['bidcnt'],
                 new DateTime(date('Y-m-dTH:i:s', strtotime($item['enddate']))));
         }
         ?>
