@@ -39,10 +39,7 @@ else {
     $curr_page = $_GET['page'];
 }
 
-$countSql = <<<SQL
-select count(*) as cnt from "Items" where userID = {$_SESSION['uid']} and "Items".itemid not in (
-select itemid from "Sold");
-
+$create_temp_table = <<<SQL
 create temporary table "similar_users" as 
 select "similar".userid, count(*) rank
 from "Bid" target 
@@ -63,12 +60,31 @@ SELECT total_rank, "similar_items".itemId, itemName, itemDescription, endDate
 FROM "similar_items"
 JOIN "Items" ON "similar_items".itemId = "Items".itemId
 order by total_rank desc;
+
+create temporary table "Bid_with_cnt_max" as
+SELECT bidid, "B1".itemId, userId, bidPrice, bidDate, bidMax, bidCnt FROM
+"Bid" "B1"
+JOIN
+(SELECT itemId, max(bidPrice) as bidMax, COUNT(bidPrice) as bidCnt 
+FROM "Bid" 
+GROUP BY itemId) "B2"
+ON "B1".itemId = "B2".itemId AND bidMax = bidPrice;
+SQL;
+
+pg_query($connection, $create_temp_table);
+
+$countSql = <<<SQL
+select count(*) as cnt from (SELECT total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
+FROM "similar_items_2" as "A"
+JOIN
+"Bid_with_cnt_max" as "B"
+ON "A".itemId = "B".itemId) as sub;
 SQL;
 
 $count_res = fetch_row($countSql);
 /* For the purposes of pagination, it would also be helpful to know the
    total number of results that satisfy the above query */
-$num_results = $count_res;
+$num_results = $count_res['cnt'];
 $results_per_page = 10;
 $max_page = ceil($num_results / $results_per_page);
 ?>
@@ -86,15 +102,6 @@ $max_page = ceil($num_results / $results_per_page);
         <?php
         $offset = ($curr_page - 1) * $results_per_page;
         $query_sql = <<<SQL
-create temporary table "Bid_with_cnt_max" as
-SELECT bidid, "B1".itemId, userId, bidPrice, bidDate, bidMax, bidCnt FROM
-"Bid" "B1"
-JOIN
-(SELECT itemId, max(bidPrice) as bidMax, COUNT(bidPrice) as bidCnt 
-FROM "Bid" 
-GROUP BY itemId) "B2"
-ON "B1".itemId = "B2".itemId AND bidMax = bidPrice;
-
 SELECT total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
 FROM "similar_items_2" as "A"
 JOIN
