@@ -31,7 +31,7 @@ CREATE TABLE "Items" (
     listingDate TIMESTAMP NOT NULL,
     endDate TIMESTAMP NOT NULL,
     -- null for delivery price means no delivery
-    deliveryPrice NUMERIC(17, 2),
+    deliveryPrice NUMERIC(17, 2)
 );
 
 CREATE TABLE "Sold" (
