@@ -53,8 +53,8 @@ Edited from https://stackoverflow.com/questions/14621181/integration-of-postgres
 In the `Build Database` directory, run the following scripts in postgresql in order:
 
 1. `create_database.pgsql`
-2. `create_admin.pgsql` (**Recommended to change the password in this file to something else!**)
-3. `create_tables.pgsql`
+2. `create_tables.pgsql`
+3. `create_admin.pgsql` (**Recommended to change the password in this file to something else!**)
 4. `insert_values_to_category.pgsql`
 5. `insert_mock_data_users.pgsql`
 6. `insert_mock_data_items.pgsql`
