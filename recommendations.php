@@ -40,6 +40,9 @@ else {
 }
 
 $countSql = <<<SQL
+select count(*) as cnt from "Items" where userID = {$_SESSION['uid']} and "Items".itemid not in (
+select itemid from "Sold");
+
 create temporary table "similar_users" as 
 select "similar".userid, count(*) rank
 from "Bid" target 
