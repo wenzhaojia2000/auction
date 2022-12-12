@@ -133,6 +133,9 @@ if ($_SESSION['error']) {
 /* TODO-DONE #3: If everything looks good, make the appropriate call to insert
             data into the database. */
 
+// no errors, so we unset the variable.
+unset($_SESSION['error']);
+
 if ($deliveryType == 'none' ) {
     $deliveryPrice = NULL;
 } else if ($deliveryType == 'free') {

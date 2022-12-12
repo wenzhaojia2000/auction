@@ -49,6 +49,9 @@ if ($_SESSION['error']) {
     exit();
 }
 
+// no errors, so we unset the variable.
+unset($_SESSION['error']);
+
 pg_insert($connection, 'Bid', [
     'userid' => $_SESSION['uid'],
     'itemid' => $itemId,
