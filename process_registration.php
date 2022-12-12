@@ -33,6 +33,8 @@ if (empty($username) == 1) {
     $_SESSION['error'][] = "Please enter a valid username";
 } else if (strlen($username) > 32) {
     $_SESSION['error'][] = "Username too long. Choose a shorter username";
+} else if (preg_match("/[^0-9A-Za-z_-]/m", $username) == 1) {
+    $_SESSION['error'][] = "Username can only contain numerals (0-9), letters (A-Z, a-z), hyphens, and underscores.";
 } else {
     // check username has not been taken 
     $query = "SELECT COUNT(username) FROM \"User\" WHERE username = '$username'";
@@ -47,6 +49,8 @@ if (empty($email) == 1) {
     $_SESSION['error'][] = "Please enter a valid email";
 } else if (strlen($email) > 254) {
     $_SESSION['error'][] = "Email is too long to be valid.";
+} else if (preg_match("/@/m", $email) == 0){
+    $_SESSION['error'][] = "Invalid email address.";
 }
 
 // we just want to return one of these errors.
