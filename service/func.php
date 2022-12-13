@@ -25,9 +25,9 @@
         $mail->SMTPSecure = 'ssl';
         $mail->Host       = 'smtp.163.com';
         $mail->Port       = '465';
-        $mail->Username   = 'ebaydeluxe@163.com';
-        $mail->Password   = 'FOYCWQSQYDZCPINO';
-        $mail->SetFrom('ebaydeluxe@163.com', 'Admin');
+        $mail->Username   = 'ebay_deluxe@163.com';
+        $mail->Password   = 'XZDHUPWGKTDHMXQW';
+        $mail->SetFrom('ebay_deluxe@163.com', 'Admin');
         $mail->Subject    = $subject;
         $mail->MsgHTML($body);
         $address = $to;
