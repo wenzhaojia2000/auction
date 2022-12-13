@@ -102,11 +102,13 @@ $max_page = ceil($num_results / $results_per_page);
         <?php
         $offset = ($curr_page - 1) * $results_per_page;
         $query_sql = <<<SQL
-SELECT total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
+SELECT * FROM (
+SELECT DISTINCT ON ("A".itemId) total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
 FROM "similar_items_2" as "A"
-JOIN
-"Bid_with_cnt_max" as "B"
+JOIN "Bid_with_cnt_max" as "B"
 ON "A".itemId = "B".itemId
+ORDER BY "A".itemid
+) AS SUB
 ORDER BY total_rank DESC;
 SQL;
         $query_data = fetch_all($query_sql);
