@@ -5,7 +5,7 @@
 <div class="container">
 
 <h2 class="my-3">Recommendations for you</h2>
-<p><i>Recommendations are based on collaborative filtering and will appear as soon as you have bidded on an item with at least one bid</i>.</p>
+<p><i>Recommendations are based on collaborative filtering and will appear as soon as you have bid on an item with at least one other bid</i>.</p>
 
 <?php
   // This page is for showing a buyer recommended items based on their bid 
