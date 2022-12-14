@@ -62,24 +62,24 @@ JOIN "Items" ON "similar_items".itemId = "Items".itemId
 order by total_rank desc;
 
 create temporary table "Bid_with_cnt_max" as
-SELECT bidid, "B1".itemId, userId, bidPrice, bidDate, bidMax, bidCnt FROM
-"Bid" "B1"
+SELECT bidid, "Bid1".itemId, userId, bidPrice, bidDate, bidMax, bidCnt FROM
+"Bid" "Bid1"
 JOIN
 (SELECT itemId, max(bidPrice) as bidMax, COUNT(bidPrice) as bidCnt 
 FROM "Bid" 
-GROUP BY itemId) "B2"
-ON "B1".itemId = "B2".itemId AND bidMax = bidPrice;
+GROUP BY itemId) "Bid2"
+ON "Bid1".itemId = "Bid2".itemId AND bidMax = bidPrice;
 SQL;
 
 pg_query($connection, $create_temp_table);
 
 $countSql = <<<SQL
 select count(*) as cnt from (SELECT * FROM (
-SELECT DISTINCT ON ("A".itemId) total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
-FROM "similar_items_2" as "A"
-JOIN "Bid_with_cnt_max" as "B"
-ON "A".itemId = "B".itemId
-ORDER BY "A".itemid
+SELECT DISTINCT ON ("similar2".itemId) total_rank, "similar2".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
+FROM "similar_items_2" as "similar2"
+JOIN "Bid_with_cnt_max" as "Bwcm"
+ON "similar2".itemId = "Bwcm".itemId
+ORDER BY "similar2".itemid
 ) AS SUB
 ORDER BY total_rank DESC) as sub;
 SQL;
@@ -106,11 +106,11 @@ $max_page = ceil($num_results / $results_per_page);
         $offset = ($curr_page - 1) * $results_per_page;
         $query_sql = <<<SQL
 SELECT * FROM (
-SELECT DISTINCT ON ("A".itemId) total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
-FROM "similar_items_2" as "A"
-JOIN "Bid_with_cnt_max" as "B"
-ON "A".itemId = "B".itemId
-ORDER BY "A".itemid
+SELECT DISTINCT ON ("similar2".itemId) total_rank, "similar2".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
+FROM "similar_items_2" as "similar2"
+JOIN "Bid_with_cnt_max" as "Bwcm"
+ON "similar2".itemId = "Bwcm".itemId
+ORDER BY "similar2".itemid
 ) AS SUB
 ORDER BY total_rank DESC limit $results_per_page offset {$offset};
 SQL;
