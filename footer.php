@@ -13,7 +13,7 @@
 <footer class="site-footer">
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
      <ul class="navbar-nav">
-          <a class="nav-link" href="#">Database Fundamentals Group 22</a>
+          <a class="nav-link" href="https://youtu.be/kfe_Gkk5rwM">Database Fundamentals Group 22</a>
      </ul>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item" style="color:white;"><i>We don't use cookies.</i></li>
