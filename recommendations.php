@@ -112,7 +112,7 @@ JOIN "Bid_with_cnt_max" as "B"
 ON "A".itemId = "B".itemId
 ORDER BY "A".itemid
 ) AS SUB
-ORDER BY total_rank DESC;
+ORDER BY total_rank DESC limit $results_per_page offset {$offset};
 SQL;
         $query_data = fetch_all($query_sql);
 

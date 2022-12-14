@@ -63,7 +63,7 @@ if ($num_results==0){
     <?php
     $offset = ($curr_page - 1) * $results_per_page;
     $query_sql = <<<SQL
-select *, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items" where userID = $userID limit $results_per_page offset {$offset}
+select *, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids from "Items" where userID = $userID order by listingdate desc $results_per_page offset {$offset}
 SQL;
     $query_data = fetch_all($query_sql);
 

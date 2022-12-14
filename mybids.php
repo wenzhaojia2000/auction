@@ -69,11 +69,13 @@ SQL;
             <?php
             $offset = ($curr_page - 1) * $results_per_page;
             $query_sql = <<<SQL
-select distinct on ("Items".itemid) "B".bidprice as bid_price , "B".userid as bid_user_id, "Items".*, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids
+select * from (
+select distinct on ("Items".itemid) "B".bidprice as bid_price , "B".userid as bid_user_id, "B".biddate as biddate, "Items".*, (select count(*) from "Bid" where "Bid".itemid = "Items".itemid) as bids
 from "Bid"  
 left outer join "Items"  on "Bid".itemid = "Items".itemid
 inner join "Bid" as "B" ON "B".itemid = "Items".itemid
-where "Bid".userid = {$_SESSION['uid']} order by "Items".itemid, bid_price desc limit $results_per_page offset {$offset}
+where "Bid".userid = {$_SESSION['uid']} order by "Items".itemid) as sub
+order by biddate desc limit $results_per_page offset {$offset}
 
 SQL;
             $query_data = fetch_all($query_sql);
