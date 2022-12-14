@@ -74,11 +74,14 @@ SQL;
 pg_query($connection, $create_temp_table);
 
 $countSql = <<<SQL
-select count(*) as cnt from (SELECT total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
+select count(*) as cnt from (SELECT * FROM (
+SELECT DISTINCT ON ("A".itemId) total_rank, "A".itemId, itemName, itemDescription, bidMax, bidCnt, endDate 
 FROM "similar_items_2" as "A"
-JOIN
-"Bid_with_cnt_max" as "B"
-ON "A".itemId = "B".itemId) as sub;
+JOIN "Bid_with_cnt_max" as "B"
+ON "A".itemId = "B".itemId
+ORDER BY "A".itemid
+) AS SUB
+ORDER BY total_rank DESC) as sub;
 SQL;
 
 $count_res = fetch_row($countSql);
