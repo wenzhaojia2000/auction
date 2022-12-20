@@ -1,8 +1,8 @@
 ![Logo](images/system/index.png)
 
-# Auction
+# COMP0178 Database Fundamentals Group 22 Assignment
 
-Starter code from Moodle page with an ER Diagram created in https://app.diagrams.net 
+Starter code from [Moodle page](https://moodle.ucl.ac.uk/course/view.php?id=30098) with an ER Diagram created in https://app.diagrams.net 
 
 This code uses [PHPMailer](https://github.com/PHPMailer/PHPMailer).
 
